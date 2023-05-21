@@ -17,6 +17,7 @@ class HttpService {
       SharedPreferences pref = await SharedPreferences.getInstance();
       await pref.setString("email", email);
       await pref.setString("token", Users['data']);
+      await pref.setBool("is_login", true);
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(

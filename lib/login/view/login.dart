@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
+// ignore: unused_import
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:email_validator/email_validator.dart';
-import 'package:cool_alert/cool_alert.dart';
 import 'package:plavon/login/service/service_page.dart';
+// ignore: unused_import
 import 'package:plavon/login/widget/login_widget.dart';
 
 class LoginPage extends StatefulWidget {
@@ -14,19 +13,19 @@ class LoginPage extends StatefulWidget {
   _LoginPageState createState() => _LoginPageState();
 }
 
+bool _passwordVisible = false;
+
 class _LoginPageState extends State<LoginPage> {
   TextEditingController emailEditController = TextEditingController();
   late String email;
   late String password;
   final _formKey = GlobalKey<FormState>();
-  static const IconData directions_car =
-      IconData(0xe1d7, fontFamily: 'MaterialIcons');
-
+  // static const IconData directions_car =
+  //     IconData(0xe1d7, fontFamily: 'MaterialIcons');
   @override
-  bool _passwordVisible = false;
   void initState() {
-    _passwordVisible = false;
     super.initState();
+    _passwordVisible = false;
   }
 
   Widget build(BuildContext context) {
