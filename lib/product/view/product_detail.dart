@@ -23,13 +23,7 @@ class ProductDetailsView extends StatelessWidget {
       backgroundColor: AppColors.kBgColor,
       appBar: AppBar(
         elevation: 0,
-        leading: IconButton(
-          onPressed: () {},
-          icon: const Icon(
-            Ionicons.chevron_back,
-            color: Colors.black,
-          ),
-        ),
+        
         actions: [
           IconButton(
             onPressed: () {},
