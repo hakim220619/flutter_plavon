@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:plavon/home/menu_page.dart';
 // ignore: unused_import
 import 'package:plavon/home/view/home.dart';
+import 'package:plavon/product/view/product_detail.dart';
 // import 'package:plavon/product/service/service_product.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:async';
@@ -27,7 +28,7 @@ class _ListProductState extends State<ListProduct> {
         "Accept": "application/json",
         "Authorization": "Bearer " + token.toString(),
       });
-      print(response.body);
+      // print(response.body);
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
         // print(data);
@@ -40,12 +41,6 @@ class _ListProductState extends State<ListProduct> {
       print(e);
     }
   }
-
-  // Future refresh() async {
-  //   setState(() {
-  //     barang();
-  //   });
-  // }
 
   void initState() {
     super.initState();
@@ -62,7 +57,7 @@ class _ListProductState extends State<ListProduct> {
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
               ),
-              itemCount: _get.length, // <-- required
+              itemCount: _get.length,
               itemBuilder: (_, i) => Card(
                     child: Container(
                       height: 290,
@@ -72,9 +67,21 @@ class _ListProductState extends State<ListProduct> {
                       padding: EdgeInsets.all(5),
                       child: Stack(
                         children: [
-                          Column(
+                          InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (
+                                    context,
+                                  ) =>
+                                          ProductDetailsView()));
+                            },
+                            child: Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
+                            
                             children: [
+                              
                               Expanded(
                                 child: Image.network(
                                   'https://plavon.dlhcode.com/storage/images/barang/${_get[i]['image']}',
@@ -101,6 +108,9 @@ class _ListProductState extends State<ListProduct> {
                               )
                             ],
                           ),
+                          ),
+
+                          
                         ],
                       ),
                     ),
