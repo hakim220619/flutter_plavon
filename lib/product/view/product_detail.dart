@@ -7,7 +7,18 @@ import 'package:plavon/product/model/sm_product_model.dart';
 import 'package:plavon/product/utils/color.dart';
 
 class ProductDetailsView extends StatelessWidget {
-  ProductDetailsView({Key? key}) : super(key: key);
+  ProductDetailsView({
+    Key? key,
+    required this.id,
+    required this.nama_barang,
+    required this.harga,
+    required this.image,
+  }) : super(key: key);
+  final String? id;
+  final String? nama_barang;
+  final String? harga;
+  final String? image;
+
   final ProductController productController = Get.put(ProductController());
 
   final List<SmProduct> smProducts = [
@@ -23,7 +34,6 @@ class ProductDetailsView extends StatelessWidget {
       backgroundColor: AppColors.kBgColor,
       appBar: AppBar(
         elevation: 0,
-        
         actions: [
           IconButton(
             onPressed: () {},
@@ -40,7 +50,10 @@ class ProductDetailsView extends StatelessWidget {
             height: MediaQuery.of(context).size.height * .35,
             padding: const EdgeInsets.only(bottom: 30),
             width: double.infinity,
-            child: Image.asset('assets/images/main_image.png'),
+            child: Image.network(
+              'https://plavon.dlhcode.com/storage/images/barang/${_get[i]['image']}',
+              fit: BoxFit.fill,
+            ),
           ),
           Expanded(
             child: Stack(

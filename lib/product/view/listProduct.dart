@@ -34,7 +34,7 @@ class _ListProductState extends State<ListProduct> {
         // print(data);
         setState(() {
           _get = data['data'];
-          // print(_get);
+          print(_get);
         });
       }
     } catch (e) {
@@ -75,42 +75,43 @@ class _ListProductState extends State<ListProduct> {
                                       builder: (
                                     context,
                                   ) =>
-                                          ProductDetailsView()));
+                                          ProductDetailsView(
+                                            id: _get[i]['id'],
+                                            nama_barang: _get[i]['nama_barang'],
+                                            harga: _get[i]['harga'],
+                                            image: _get[i]['image'],
+                                          )));
                             },
                             child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            
-                            children: [
-                              
-                              Expanded(
-                                child: Image.network(
-                                  'https://plavon.dlhcode.com/storage/images/barang/${_get[i]['image']}',
-                                  fit: BoxFit.fill,
-                                ),
-                              ),
-                              Text(
-                                '${_get[i]['nama_barang']}',
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Row(
-                                children: [
-                                  Text(
-                                    '${_get[i]['harga']}',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 15,
-                                    ),
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                Expanded(
+                                  child: Image.network(
+                                    'https://plavon.dlhcode.com/storage/images/barang/${_get[i]['image']}',
+                                    fit: BoxFit.fill,
                                   ),
-                                ],
-                              )
-                            ],
+                                ),
+                                Text(
+                                  '${_get[i]['nama_barang']}',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Row(
+                                  children: [
+                                    Text(
+                                      '${_get[i]['harga']}',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 15,
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
                           ),
-                          ),
-
-                          
                         ],
                       ),
                     ),
