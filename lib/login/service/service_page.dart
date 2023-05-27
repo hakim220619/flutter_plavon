@@ -14,8 +14,10 @@ class HttpService {
         .post(_loginUrl, body: {"email": email, "password": password});
     if (response.statusCode == 200) {
       var Users = jsonDecode(response.body);
+      // print(Users);
       SharedPreferences pref = await SharedPreferences.getInstance();
       await pref.setString("email", email);
+      await pref.setString("id_user", Users['user']['id'].toString());
       await pref.setString("token", Users['data']);
       await pref.setBool("is_login", true);
       Navigator.pushAndRemoveUntil(

@@ -44,6 +44,8 @@ dependencies:
   google_fonts: ^4.0.4
   ionicons: ^0.2.2
   hexcolor: ^3.0.1
+  json_annotation: ^4.8.1
+  build_runner: ^2.4.4
 
 dev_dependencies:
   flutter_test:

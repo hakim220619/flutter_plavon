@@ -34,7 +34,7 @@ class _ListProductState extends State<ListProduct> {
         // print(data);
         setState(() {
           _get = data['data'];
-          print(_get);
+          // print(_get);
         });
       }
     } catch (e) {
@@ -75,11 +75,16 @@ class _ListProductState extends State<ListProduct> {
                                       builder: (
                                     context,
                                   ) =>
-                                          ProductDetailsView(
+                                          DetailProduct(
                                             id: _get[i]['id'],
+                                            user_id: _get[i]['user_id'],
                                             nama_barang: _get[i]['nama_barang'],
+                                            jenis: _get[i]['jenis'],
+                                            stok: _get[i]['stok'],
                                             harga: _get[i]['harga'],
+                                            ukuran: _get[i]['ukuran'],
                                             image: _get[i]['image'],
+                                            deskripsi: _get[i]['deskripsi'],
                                           )));
                             },
                             child: Column(
