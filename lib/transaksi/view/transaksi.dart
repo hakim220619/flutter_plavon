@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:plavon/home/menu_page.dart';
 import 'package:plavon/home/view/home.dart';
 import 'package:plavon/transaksi/view/transaksi.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -21,59 +22,23 @@ class _transaksiPageState extends State<transaksiPage> {
     Future riwayatTiket() async {
       try {
         SharedPreferences preferences = await SharedPreferences.getInstance();
-        var email = preferences.getString('email');
-        var id_user = preferences.getInt('id_user');
-        var _riwayatTiket =
-            Uri.parse('https://plafon.dlhcode.com/api/pemesanan');
-        http.Response response = await http.post(_riwayatTiket, body: {
-          "email": email,
-          "id_user": id_user.toString(),
+        var id_user = preferences.getString('id_user');
+        var token = preferences.getString('token');
+        var _riwayatTiket = Uri.parse(
+            'https://plavon.dlhcode.com/api/get_pemesanan_by_id/${id_user.toString()}');
+        http.Response response = await http.get(_riwayatTiket, headers: {
+          "Accept": "application/json",
+          "Authorization": "Bearer " + token.toString(),
         });
+        // print(id_user);
         if (response.statusCode == 200) {
           final data = jsonDecode(response.body);
 
           setState(() {
             _get = data['data'];
+            // print(_get);
           });
           // var _orderid =
-          //     Uri.parse('https://travel.dlhcode.com/api/cek_transaksi');
-          // http.Response getOrderId = await http.post(_orderid, body: {
-          //   "id_user": id_user.toString(),
-          // });
-
-          // if (getOrderId.statusCode == 200) {
-          //   final dataOrderId = jsonDecode(getOrderId.body)['data'];
-          //   // print(dataOrderId);
-          //   for (var i = 0; i < dataOrderId.length; i++) {
-          //     var orderId = dataOrderId[i]['order_id'];
-          //     // print(i);
-          //     String username = 'SB-Mid-server-z5T9WhivZDuXrJxC7w-civ_k';
-          //     String password = '';
-          //     String basicAuth =
-          //         'Basic ' + base64Encode(utf8.encode('$username:$password'));
-          //     http.Response responseTransaksi = await http.get(
-          //       Uri.parse("https://api.sandbox.midtrans.com/v2/" +
-          //           orderId +
-          //           "/status"),
-          //       headers: <String, String>{
-          //         'authorization': basicAuth,
-          //         'Content-Type': 'application/json'
-          //       },
-          //     );
-          //     var jsonTransaksi = jsonDecode(responseTransaksi.body.toString());
-
-          //     if (jsonTransaksi['status_code'] == '200') {
-          //       var updateTransaksi =
-          //           Uri.parse('https://travel.dlhcode.com/api/updateTransaksi');
-          //       // ignore: unused_local_variable
-          //       http.Response getOrderId =
-          //           await http.post(updateTransaksi, body: {
-          //         "order_id": orderId,
-          //       });
-          //       // print(jsonTransaksi['status_code']);
-          //     }
-          //   }
-          // }
         }
       } catch (e) {
         print(e);
@@ -110,28 +75,24 @@ class _transaksiPageState extends State<transaksiPage> {
                   ),
                   title: Text(
                     "Dari " +
-                        _get[index]['asal'] +
+                        _get[index]['nama_barang'].toString() +
                         ' | ' +
-                        _get[index]['tujuan'],
+                        _get[index]['jenis'].toString(),
                     style: new TextStyle(
                         fontSize: 15.0, fontWeight: FontWeight.bold),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
                   subtitle: Text(
-                    _get[index]['status'] +
+                    _get[index]['status'].toString() +
                         " | "
                             "Tgl " +
-                        _get[index]['created_at'].toString().substring(0, 10),
+                        _get[index]['created_at'].toString(),
                     maxLines: 2,
                     style: new TextStyle(fontSize: 14.0),
                     overflow: TextOverflow.ellipsis,
                   ),
-                  trailing: Text(
-                    _get[index]['tgl_keberangkatan']
-                        .toString()
-                        .substring(10, 19),
-                  ),
+                  trailing: Text(_get[index]['jumlah'].toString()),
                   onTap: () {
                     if (_get[index]['status'] == 'lunas') {
                       Navigator.push(
@@ -169,6 +130,7 @@ class _transaksiPageState extends State<transaksiPage> {
             ),
           ),
         ),
+        drawer: MenuPage(),
       ),
     );
   }

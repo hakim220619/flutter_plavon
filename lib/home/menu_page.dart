@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:plavon/home/view/home.dart';
+// ignore: unused_import
 import 'package:plavon/login/view/login.dart';
 // ignore: unused_import
 import 'package:plavon/product/view/listProduct.dart';
+import 'package:plavon/transaksi/view/transaksi.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MenuPage extends StatefulWidget {
@@ -72,13 +74,13 @@ class _MenuPageState extends State<MenuPage> {
               leading: Icon(Icons.money),
               title: Text("Transaksi"),
               onTap: () {
-                Navigator.pop(
+                Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: (
                       context,
                     ) =>
-                            LoginPage()));
+                            transaksiPage()));
               },
             ),
             Divider(),
