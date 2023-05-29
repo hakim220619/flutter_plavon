@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:plavon/home/menu_page.dart';
 import 'package:plavon/home/view/home.dart';
+import 'package:plavon/pay/view/pay.dart';
+// ignore: unused_import
 import 'package:plavon/transaksi/view/transaksi.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -92,7 +94,7 @@ class _transaksiPageState extends State<transaksiPage> {
                     style: new TextStyle(fontSize: 14.0),
                     overflow: TextOverflow.ellipsis,
                   ),
-                  trailing: Text(_get[index]['jumlah'].toString()),
+                  trailing: Text(_get[index]['harga'].toString()),
                   onTap: () {
                     if (_get[index]['status'] == 'lunas') {
                       Navigator.push(
@@ -112,16 +114,15 @@ class _transaksiPageState extends State<transaksiPage> {
                     } else {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => HomePage()
-                            //   payPage(
-                            //       nama: _get[index]['nama_pemesan'].toString(),
-                            //       email: _get[index]['email'].toString(),
-                            //       no_hp: _get[index]['no_hp'].toString(),
-                            //       status: _get[index]['status'].toString(),
-                            //       redirect_url:
-                            //           _get[index]['redirect_url'].toString()),
-                            // ),
-                            ),
+                        MaterialPageRoute(
+                          builder: (context) => PayPage(
+                              nama_barang:
+                                  _get[index]['nama_barang'].toString(),
+                              harga: _get[index]['harga'].toString(),
+                              status: _get[index]['status'].toString(),
+                              jenis: _get[index]['jenis'].toString(),
+                              jumlah: _get[index]['jumlah'].toString()),
+                        ),
                       );
                     }
                   },

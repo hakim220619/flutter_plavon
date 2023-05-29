@@ -46,6 +46,7 @@ dependencies:
   hexcolor: ^3.0.1
   json_annotation: ^4.8.1
   build_runner: ^2.4.4
+  url_launcher: ^6.1.11
 
 dev_dependencies:
   flutter_test:
