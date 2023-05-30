@@ -14,18 +14,24 @@ class LoginPage extends StatefulWidget {
 }
 
 bool _passwordVisible = false;
+final _formKey = GlobalKey<FormState>();
 
 class _LoginPageState extends State<LoginPage> {
   TextEditingController emailEditController = TextEditingController();
   late String email;
   late String password;
-  final _formKey = GlobalKey<FormState>();
+
   // static const IconData directions_car =
   //     IconData(0xe1d7, fontFamily: 'MaterialIcons');
   @override
   void initState() {
     super.initState();
     _passwordVisible = false;
+  }
+
+  void dispose() {
+    _formKey.currentState?.dispose();
+    super.dispose();
   }
 
   Widget build(BuildContext context) {

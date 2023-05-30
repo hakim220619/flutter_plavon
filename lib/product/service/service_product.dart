@@ -13,8 +13,6 @@ import 'package:plavon/product/service/data.dart';
 class ServiceProduct {
   static var _pesanmidtransUrl =
       Uri.parse('https://app.sandbox.midtrans.com/snap/v1/transactions');
-  static var _pesanUrl =
-      Uri.parse("https://plavon.dlhcode.com/api/tambah_pemesanan");
 
   Future<List<Data>> fetchData() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -32,6 +30,9 @@ class ServiceProduct {
       throw Exception('Unexpected error occured!');
     }
   }
+
+  static var _pesanUrl =
+      Uri.parse("https://plavon.dlhcode.com/api/tambah_pemesanan");
 
   static pesan(id, jumlah, harga, context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -59,7 +60,7 @@ class ServiceProduct {
           "credit_card": {"secure": true}
         }));
     var jsonMidtrans = jsonDecode(responseMidtrans.body.toString());
-    // print(jsonMidtrans);
+    print(jsonMidtrans['redirect_url']);
 
     http.Response response = await http.post(_pesanUrl, headers: {
       "Accept": "application/json",
@@ -71,7 +72,7 @@ class ServiceProduct {
       "harga": harga.toString(),
       "status": "belum bayar",
       "order_id": number.toString(),
-      "redirect_url": jsonMidtrans['redirect_url'],
+      "redirect_url": jsonMidtrans['redirect_url'].toString(),
     });
     // print(response.body);
     if (response.statusCode == 200) {

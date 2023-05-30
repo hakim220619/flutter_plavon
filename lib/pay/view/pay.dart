@@ -12,12 +12,14 @@ class PayPage extends StatefulWidget {
     required this.status,
     required this.jenis,
     required this.jumlah,
+    required this.redirect_url,
   }) : super(key: key);
   final String nama_barang;
   final String harga;
   final String status;
   final String jenis;
   final String jumlah;
+  final String redirect_url;
 
   @override
   State<PayPage> createState() => _PayPageState();
@@ -133,7 +135,7 @@ class _PayPageState extends State<PayPage> {
                     child: ElevatedButton(
                   child: Text("Bayar Sekarang"),
                   onPressed: () async {
-                    String url = widget.jumlah;
+                    String url = widget.redirect_url;
                     var urllaunchable = await canLaunch(
                         url); //canLaunch is from url_launcher package
                     if (urllaunchable) {

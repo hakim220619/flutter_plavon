@@ -30,17 +30,18 @@ class _HomePageState extends State<HomePage> {
         SharedPreferences preferences = await SharedPreferences.getInstance();
         setState(() {
           preferences.remove("email");
+          preferences.remove("id_user");
           preferences.remove("is_login");
           preferences.remove("token");
         });
 
-        Navigator.pushAndRemoveUntil(
+        Navigator.push(
           context,
           MaterialPageRoute(
             builder: (BuildContext context) => LoginPage(),
           ),
-          (route) => false,
         );
+        // Navigator.of(context).pop();
       }
     } catch (e) {
       print(e);

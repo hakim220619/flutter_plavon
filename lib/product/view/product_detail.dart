@@ -29,12 +29,18 @@ class DetailProduct extends StatefulWidget {
 }
 
 late String jumlah;
-final _formkey = GlobalKey<FormState>();
 
 class _DetailProductState extends State<DetailProduct> {
   TextEditingController NamaBarang = TextEditingController();
+  final _formkey = GlobalKey<FormState>();
   // TextEditingController Email = TextEditingController();
   // TextEditingController Nohp = TextEditingController();
+  @override
+  void dispose() {
+    _formkey.currentState?.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     Future<void> _showMyDialog(String title, String text, String nobutton,
