@@ -20,79 +20,79 @@ class transaksiPage extends StatefulWidget {
 List _get = [];
 
 class _transaksiPageState extends State<transaksiPage> {
-  @override
-  Widget build(BuildContext context) {
-    Future riwayatTiket() async {
-      try {
-        SharedPreferences preferences = await SharedPreferences.getInstance();
-        var id_user = preferences.getString('id_user');
-        var token = preferences.getString('token');
-        var _riwayatTiket = Uri.parse(
-            'https://plavon.dlhcode.com/api/get_pemesanan_by_id/${id_user.toString()}');
-        http.Response response = await http.get(_riwayatTiket, headers: {
-          "Accept": "application/json",
-          "Authorization": "Bearer " + token.toString(),
+  Future riwayatTiket() async {
+    try {
+      SharedPreferences preferences = await SharedPreferences.getInstance();
+      var id_user = preferences.getString('id_user');
+      var token = preferences.getString('token');
+      var _riwayatTiket = Uri.parse(
+          'https://plavon.dlhcode.com/api/get_pemesanan_by_id/${id_user.toString()}');
+      http.Response response = await http.get(_riwayatTiket, headers: {
+        "Accept": "application/json",
+        "Authorization": "Bearer " + token.toString(),
+      });
+      // print(id_user);
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+
+        setState(() {
+          _get = data['data'];
+          // print(_get);
         });
-        // print(id_user);
-        if (response.statusCode == 200) {
-          final data = jsonDecode(response.body);
+        // print(_get[0]['order_id']);
 
-          setState(() {
-            _get = data['data'];
-            // print(_get);
-          });
-          // print(_get[0]['order_id']);
-
-          // print(data);
-          for (var i = 0; i < data['data'].length; i++) {
-            var orderId = data['data'][i]['order_id'];
-            // print(orderId);
-            String username = 'SB-Mid-server-z5T9WhivZDuXrJxC7w-civ_k';
-            String password = '';
-            String basicAuth =
-                'Basic ' + base64Encode(utf8.encode('$username:$password'));
-            http.Response responseTransaksi = await http.get(
-              Uri.parse(
-                  "https://api.sandbox.midtrans.com/v2/" + orderId + "/status"),
-              headers: <String, String>{
-                'authorization': basicAuth,
-                'Content-Type': 'application/json'
-              },
-            );
-            var jsonTransaksi = jsonDecode(responseTransaksi.body.toString());
-            // print(jsonTransaksi);
-            if (jsonTransaksi['status_code'] == '200') {
-              var updateTransaksi =
-                  Uri.parse('https://plavon.dlhcode.com/api/updateTransaksi');
-              // ignore: unused_local_variable
-              http.Response getOrderId =
-                  await http.post(updateTransaksi, headers: {
-                "Accept": "application/json",
-                "Authorization": "Bearer " + token.toString(),
-              }, body: {
-                "order_id": orderId,
-              });
-              // print(getOrderId.body);
-            }
+        // print(data);
+        for (var i = 0; i < data['data'].length; i++) {
+          var orderId = data['data'][i]['order_id'];
+          // print(orderId);
+          String username = 'SB-Mid-server-z5T9WhivZDuXrJxC7w-civ_k';
+          String password = '';
+          String basicAuth =
+              'Basic ' + base64Encode(utf8.encode('$username:$password'));
+          http.Response responseTransaksi = await http.get(
+            Uri.parse(
+                "https://api.sandbox.midtrans.com/v2/" + orderId + "/status"),
+            headers: <String, String>{
+              'authorization': basicAuth,
+              'Content-Type': 'application/json'
+            },
+          );
+          var jsonTransaksi = jsonDecode(responseTransaksi.body.toString());
+          // print(jsonTransaksi);
+          if (jsonTransaksi['status_code'] == '200') {
+            var updateTransaksi =
+                Uri.parse('https://plavon.dlhcode.com/api/updateTransaksi');
+            // ignore: unused_local_variable
+            http.Response getOrderId =
+                await http.post(updateTransaksi, headers: {
+              "Accept": "application/json",
+              "Authorization": "Bearer " + token.toString(),
+            }, body: {
+              "order_id": orderId,
+            });
+            // print(getOrderId.body);
           }
         }
-      } catch (e) {
-        print(e);
       }
+    } catch (e) {
+      print(e);
     }
+  }
 
-    Future refresh() async {
-      setState(() {
-        riwayatTiket();
-      });
-    }
-
-    void initState() {
-      super.initState();
+  Future refresh() async {
+    setState(() {
       riwayatTiket();
-      refresh();
-    }
+    });
+  }
 
+  void initState() {
+    super.initState();
+    riwayatTiket();
+    refresh();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(

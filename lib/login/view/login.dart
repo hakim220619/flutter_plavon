@@ -29,11 +29,6 @@ class _LoginPageState extends State<LoginPage> {
     _passwordVisible = false;
   }
 
-  void dispose() {
-    _formKey.currentState?.dispose();
-    super.dispose();
-  }
-
   Widget build(BuildContext context) {
     return Form(
       key: _formKey,
@@ -42,15 +37,22 @@ class _LoginPageState extends State<LoginPage> {
           const SizedBox(
             height: 200,
           ),
-          // Container(
-          //   padding: const EdgeInsets.all(10),
-          //   child: Center(
-          //     child: Image.asset(
-          //       'assets/images/logo.png',
-          //       height: 100,
-          //     ),
-          //   ),
-          // ),
+          Container(
+            padding: const EdgeInsets.all(10),
+            width: 200,
+            height: 150,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(8.0)),
+            ),
+            child: Center(
+              child: Image.asset(
+                'assets/images/logo.jpeg',
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 10,
+          ),
           Container(
             padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
             child: TextFormField(

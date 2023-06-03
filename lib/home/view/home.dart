@@ -35,11 +35,12 @@ class _HomePageState extends State<HomePage> {
           preferences.remove("token");
         });
 
-        Navigator.push(
+        Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
             builder: (BuildContext context) => LoginPage(),
           ),
+          (route) => false,
         );
         // Navigator.of(context).pop();
       }
