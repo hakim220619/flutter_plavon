@@ -73,6 +73,7 @@ class _HomePageState extends State<HomePage> {
               child: Text(yesbutton),
               onPressed: () async {
                 Logout();
+                Navigator.of(context, rootNavigator: true).pop('dialog');
               },
             ),
           ],

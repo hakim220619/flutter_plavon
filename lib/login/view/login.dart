@@ -35,7 +35,7 @@ class _LoginPageState extends State<LoginPage> {
       child: Column(
         children: [
           const SizedBox(
-            height: 200,
+            height: 100,
           ),
           Container(
             padding: const EdgeInsets.all(10),
@@ -45,13 +45,13 @@ class _LoginPageState extends State<LoginPage> {
               borderRadius: BorderRadius.all(Radius.circular(8.0)),
             ),
             child: Center(
-              child: Image.asset(
-                'assets/images/logo.jpeg',
+              child: Image.asset( 
+                'assets/images/logo.png',
               ),
             ),
           ),
           SizedBox(
-            height: 10,
+            height: 80,
           ),
           Container(
             padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),

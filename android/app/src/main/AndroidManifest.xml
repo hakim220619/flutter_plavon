@@ -18,7 +18,7 @@
    <application
     android:label="plavon"
     android:name="${applicationName}"
-    android:icon="@mipmap/ic_launcher"
+    android:icon="@mipmap/logo"
   >
         <activity
       android:name=".MainActivity"
