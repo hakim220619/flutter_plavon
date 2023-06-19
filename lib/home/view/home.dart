@@ -4,6 +4,7 @@ import 'package:plavon/home/menu_page.dart';
 import 'package:plavon/login/view/login.dart';
 import 'package:plavon/product/view/listProduct.dart';
 import 'package:http/http.dart' as http;
+import 'package:plavon/profile/view/profile.dart';
 import 'package:plavon/transaksi/view/transaksi.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -94,9 +95,7 @@ void _onItemTapped(int index) {
     final List<Widget> _widgetOptions = <Widget>[
       ListProduct(),
       transaksiPage(),
-      Column(
-        
-      ),
+      ProfilePage()
     ];
 
     return Scaffold(
