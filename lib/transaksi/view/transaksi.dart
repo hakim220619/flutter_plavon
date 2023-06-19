@@ -96,9 +96,7 @@ class _transaksiPageState extends State<transaksiPage> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        appBar: AppBar(
-          title: Text("Transaksi"),
-        ),
+        
         body: RefreshIndicator(
           onRefresh: refresh,
           child: ListView.builder(

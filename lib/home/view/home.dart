@@ -4,6 +4,7 @@ import 'package:plavon/home/menu_page.dart';
 import 'package:plavon/login/view/login.dart';
 import 'package:plavon/product/view/listProduct.dart';
 import 'package:http/http.dart' as http;
+import 'package:plavon/transaksi/view/transaksi.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
@@ -81,8 +82,23 @@ class _HomePageState extends State<HomePage> {
       },
     );
   }
+int _selectedIndex = 0;
+void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
 
+      
+    });
+  }
   Widget build(BuildContext context) {
+    final List<Widget> _widgetOptions = <Widget>[
+      ListProduct(),
+      transaksiPage(),
+      Column(
+        
+      ),
+    ];
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Home"),
@@ -104,11 +120,34 @@ class _HomePageState extends State<HomePage> {
         ],
         centerTitle: true,
       ),
-      body: ListProduct(),
+      body: Center(
+          child: _widgetOptions.elementAt(
+            _selectedIndex,
+          ),
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.business),
+              label: 'Riwayat',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.school),
+              label: 'Profile',
+            ),
+          ],
+          currentIndex: _selectedIndex,
+          selectedItemColor: Colors.amber[800],
+          onTap: _onItemTapped,
+        ),
 
       //memberikan button garis tiga disebelah kiri appbar
       //jika ditekan akan menjalankan widget builddrawer
-      drawer: MenuPage(),
+      // drawer: MenuPage(),
     );
   }
 }

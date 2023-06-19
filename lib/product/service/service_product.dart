@@ -4,6 +4,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:plavon/home/view/home.dart';
 // ignore: unused_import
 import 'package:plavon/pay/view/pay.dart';
 import 'package:plavon/transaksi/view/transaksi.dart';
@@ -60,7 +61,7 @@ class ServiceProduct {
           "credit_card": {"secure": true}
         }));
     var jsonMidtrans = jsonDecode(responseMidtrans.body.toString());
-    print(jsonMidtrans['redirect_url']);
+    // print(jsonMidtrans['redirect_url']);
 
     http.Response response = await http.post(_pesanUrl, headers: {
       "Accept": "application/json",
@@ -80,7 +81,7 @@ class ServiceProduct {
       var json = jsonDecode(response.body.toString());
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => transaksiPage()),
+        MaterialPageRoute(builder: (context) => HomePage()),
       );
     }
   }

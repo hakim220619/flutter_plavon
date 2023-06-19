@@ -29,23 +29,7 @@ class _PayPageState extends State<PayPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text("Pembayaran"),
-          leading: InkWell(
-            onTap: () {
-              Navigator.pop(
-                context,
-                MaterialPageRoute(
-                  builder: (BuildContext context) => const transaksiPage(),
-                ),
-              );
-            },
-            child: Icon(
-              Icons.arrow_back_ios,
-              color: Color.fromARGB(253, 255, 252, 252),
-            ),
-          ),
-        ),
+        
         body: Container(
           padding: EdgeInsets.all(20),
           child: Column(
