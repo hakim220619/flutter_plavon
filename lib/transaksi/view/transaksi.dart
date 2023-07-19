@@ -153,6 +153,7 @@ class _transaksiPageState extends State<transaksiPage> {
                       context,
                       MaterialPageRoute(
                         builder: (context) => PayPage(
+                          id: _get[index]['id'],
                           nama_barang: _get[index]['nama_barang'].toString(),
                           harga: _get[index]['harga'].toString(),
                           status: _get[index]['status'].toString(),
