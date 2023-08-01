@@ -100,7 +100,7 @@ void _onItemTapped(int index) {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Home"),
+        title: Text("Plavon"),
         actions: [
           IconButton(
             icon: Icon(Icons.power_settings_new),

@@ -37,7 +37,7 @@ class _transaksiPageState extends State<transaksiPage> {
 
         setState(() {
           _get = data['data'];
-          // print(_get);
+          print(_get);
         });
         // print(_get[0]['order_id']);
 
@@ -94,6 +94,7 @@ class _transaksiPageState extends State<transaksiPage> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         
@@ -107,16 +108,14 @@ class _transaksiPageState extends State<transaksiPage> {
               child: ListTile(
                 leading: CircleAvatar(
                   backgroundColor: Color.fromARGB(255, 48, 31, 83),
-                  child: Icon(
-                    Icons.directions_car,
-                    color: Colors.white,
-                  ),
+                  child: Image.network(
+                                    'https://plavon.dlhcode.com/storage/images/barang/${_get[index]['image']}',
+                                    fit: BoxFit.fill,
+                                  ),
                 ),
                 title: Text(
-                  "Dari " +
-                      _get[index]['nama_barang'].toString() +
-                      ' | ' +
-                      _get[index]['jenis'].toString(),
+                  "Barang " +
+                      _get[index]['nama_barang'].toString(),
                   style: new TextStyle(
                       fontSize: 15.0, fontWeight: FontWeight.bold),
                   maxLines: 1,
@@ -169,7 +168,7 @@ class _transaksiPageState extends State<transaksiPage> {
             ),
           ),
         ),
-        drawer: MenuPage(),
+ 
       ),
     );
   }

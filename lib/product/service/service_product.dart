@@ -79,9 +79,14 @@ class ServiceProduct {
     if (response.statusCode == 200) {
       // ignore: unused_local_variable
       var json = jsonDecode(response.body.toString());
-      Navigator.push(
+      Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (context) => HomePage()),
+        MaterialPageRoute(
+            builder: (
+          context,
+        ) =>
+                HomePage()),
+        (route) => false,
       );
     }
   }
