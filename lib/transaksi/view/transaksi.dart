@@ -37,7 +37,7 @@ class _transaksiPageState extends State<transaksiPage> {
 
         setState(() {
           _get = data['data'];
-          print(_get);
+          // print(_get);
         });
         // print(_get[0]['order_id']);
 
