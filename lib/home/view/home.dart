@@ -18,7 +18,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final _client = http.Client();
 
-  var _logoutUrl = Uri.parse('https://plavon.dlhcode.com/api/logout');
+  final _logoutUrl = Uri.parse('https://plavon.dlhcode.com/api/logout');
 
   Future Logout() async {
     try {
@@ -40,7 +40,7 @@ class _HomePageState extends State<HomePage> {
         Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
-            builder: (BuildContext context) => LoginPage(),
+            builder: (BuildContext context) => const LoginPage(),
           ),
           (route) => false,
         );
@@ -91,26 +91,27 @@ void _onItemTapped(int index) {
       
     });
   }
+  @override
   Widget build(BuildContext context) {
     final List<Widget> _widgetOptions = <Widget>[
-      ListProduct(),
-      transaksiPage(),
-      ProfilePage()
+      const ListProduct(),
+      const transaksiPage(),
+      const ProfilePage()
     ];
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Plavon"),
+        title: const Text("Plavon"),
         actions: [
           IconButton(
-            icon: Icon(Icons.power_settings_new),
+            icon: const Icon(Icons.power_settings_new),
             onPressed: () {
               _showMyDialog('Log Out', 'Are you sure you want to logout?', 'No',
                   'Yes', () async {}, false);
 
               // ignore: unused_label
               child:
-              Text(
+              const Text(
                 'Log Out',
                 style: TextStyle(color: Colors.white),
               );

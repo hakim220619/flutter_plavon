@@ -47,7 +47,7 @@ class _PayPageState extends State<PayPage> {
         Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
-            builder: (BuildContext context) => transaksiPage(),
+            builder: (BuildContext context) => const transaksiPage(),
           ),
           (route) => false,
         );
@@ -94,22 +94,22 @@ class _PayPageState extends State<PayPage> {
     return Scaffold(
         
         body: Container(
-          padding: EdgeInsets.all(20),
+      padding: const EdgeInsets.all(20),
           child: Column(
             children: [
               const SizedBox(height: 20),
               GestureDetector(
                 child: Card(
                   color: Colors.white,
-                  margin: EdgeInsets.symmetric(vertical: 10, horizontal: 25),
+              margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
                   child: ListTile(
-                    leading: Icon(
+                leading: const Icon(
                       Icons.person,
                       color: Color.fromARGB(255, 0, 0, 0),
                     ),
                     title: Text(
                       widget.nama_barang,
-                      style: TextStyle(
+                  style: const TextStyle(
                           color: Color.fromARGB(255, 0, 0, 0),
                           fontSize: 20,
                           fontFamily: "Source Sans Pro"),
@@ -120,15 +120,15 @@ class _PayPageState extends State<PayPage> {
               GestureDetector(
                 child: Card(
                   color: Colors.white,
-                  margin: EdgeInsets.symmetric(vertical: 10, horizontal: 25),
+              margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
                   child: ListTile(
-                    leading: Icon(
+                leading: const Icon(
                       Icons.email,
                       color: Color.fromARGB(255, 0, 0, 0),
                     ),
                     title: Text(
                       widget.harga,
-                      style: TextStyle(
+                  style: const TextStyle(
                           color: Color.fromARGB(255, 0, 0, 0),
                           fontSize: 20,
                           fontFamily: "Source Sans Pro"),
@@ -139,15 +139,15 @@ class _PayPageState extends State<PayPage> {
               GestureDetector(
                 child: Card(
                   color: Colors.white,
-                  margin: EdgeInsets.symmetric(vertical: 10, horizontal: 25),
+              margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
                   child: ListTile(
-                    leading: Icon(
+                leading: const Icon(
                       Icons.call,
                       color: Color.fromARGB(255, 0, 0, 0),
                     ),
                     title: Text(
                       widget.jenis,
-                      style: TextStyle(
+                  style: const TextStyle(
                           color: Color.fromARGB(255, 0, 0, 0),
                           fontSize: 20,
                           fontFamily: "Source Sans Pro"),
@@ -158,15 +158,15 @@ class _PayPageState extends State<PayPage> {
               GestureDetector(
                 child: Card(
                   color: Colors.white,
-                  margin: EdgeInsets.symmetric(vertical: 10, horizontal: 25),
+              margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
                   child: ListTile(
-                    leading: Icon(
+                leading: const Icon(
                       Icons.payment,
                       color: Color.fromARGB(255, 0, 0, 0),
                     ),
                     title: Text(
                       widget.status,
-                      style: TextStyle(
+                  style: const TextStyle(
                           color: Color.fromARGB(255, 0, 0, 0),
                           fontSize: 20,
                           fontFamily: "Source Sans Pro"),
@@ -184,7 +184,7 @@ class _PayPageState extends State<PayPage> {
                   children: [
                     Center(
                         child: ElevatedButton(
-                      child: Text("Bayar Sekarang"),
+                  child: const Text("Bayar Sekarang"),
                       onPressed: () async {
                         String url = widget.redirect_url;
                         var urllaunchable = await canLaunch(
@@ -200,9 +200,10 @@ class _PayPageState extends State<PayPage> {
                     Center(
                         child: ElevatedButton(
                           
-                      child: Text("Delete"),
+                  child: const Text("Delete"),
                       onPressed: () async {
-                        _showMyDialog('Log Out', 'Are you sure you want to Delet?', 'No',
+                    _showMyDialog('Delete', 'Are you sure you want to Delet?',
+                        'No',
                   'Yes', () async {}, false);
                       },
                     )),
