@@ -14,7 +14,7 @@ class LoginWidget extends StatelessWidget {
                   ElevatedButton(
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(
-                          Color.fromARGB(255, 13, 219, 6)),
+                          const Color.fromARGB(255, 13, 219, 6)),
                     ),
                     onPressed: () {
                       // Navigator.push(
@@ -32,7 +32,7 @@ class LoginWidget extends StatelessWidget {
                   ElevatedButton(
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(
-                          Color.fromARGB(255, 12, 12, 7)),
+                          const Color.fromARGB(255, 12, 12, 7)),
                     ),
                     onPressed: () {
                       // Navigator.push(
@@ -47,7 +47,7 @@ class LoginWidget extends StatelessWidget {
                   ElevatedButton(
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(
-                          Color.fromARGB(255, 231, 3, 3)),
+                          const Color.fromARGB(255, 231, 3, 3)),
                     ),
                     onPressed: () {
                       // Navigator.push(

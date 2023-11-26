@@ -1,3 +1,4 @@
+// ignore: file_names
 import 'package:flutter/material.dart';
 import 'package:plavon/home/menu_page.dart';
 // ignore: unused_import
@@ -26,7 +27,7 @@ class _ListProductState extends State<ListProduct> {
       var url = Uri.parse('https://plavon.dlhcode.com/api/barang');
       final response = await http.get(url, headers: {
         "Accept": "application/json",
-        "Authorization": "Bearer " + token.toString(),
+        "Authorization": "Bearer $token",
       });
       // print(response.body);
       if (response.statusCode == 200) {
@@ -38,10 +39,11 @@ class _ListProductState extends State<ListProduct> {
         });
       }
     } catch (e) {
-      print(e);
+      // print(e);
     }
   }
 
+  @override
   void initState() {
     super.initState();
     barang();
@@ -63,8 +65,8 @@ class _ListProductState extends State<ListProduct> {
                       height: 290,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20)),
-                      margin: EdgeInsets.all(5),
-                      padding: EdgeInsets.all(5),
+                      margin: const EdgeInsets.all(5),
+                      padding: const EdgeInsets.all(5),
                       child: Stack(
                         children: [
                           InkWell(
@@ -92,13 +94,14 @@ class _ListProductState extends State<ListProduct> {
                               children: [
                                 Expanded(
                                   child: Image.network(
+                                    _get[i]['image'] == '' ? 'https://plavon.dlhcode.com/storage/images/barang/plavon1.jpeg' :
                                     'https://plavon.dlhcode.com/storage/images/barang/${_get[i]['image']}',
                                     fit: BoxFit.fill,
                                   ),
                                 ),
                                 Text(
                                   '${_get[i]['nama_barang']}',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -107,7 +110,7 @@ class _ListProductState extends State<ListProduct> {
                                   children: [
                                     Text(
                                       '${_get[i]['harga']}',
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 15,
                                       ),
@@ -123,7 +126,7 @@ class _ListProductState extends State<ListProduct> {
                   )),
         ),
       ),
-      drawer: MenuPage(),
+      drawer: const MenuPage(),
     );
   }
 }

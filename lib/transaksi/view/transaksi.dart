@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:plavon/home/menu_page.dart';
 // ignore: unused_import
 import 'package:plavon/home/view/home.dart';
 import 'package:plavon/pay/view/pay.dart';
@@ -10,6 +9,7 @@ import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
 
+// ignore: camel_case_types
 class transaksiPage extends StatefulWidget {
   const transaksiPage({super.key});
 
@@ -19,17 +19,18 @@ class transaksiPage extends StatefulWidget {
 
 List _get = [];
 
+// ignore: camel_case_types
 class _transaksiPageState extends State<transaksiPage> {
   Future riwayatTiket() async {
     try {
       SharedPreferences preferences = await SharedPreferences.getInstance();
-      var id_user = preferences.getString('id_user');
+      var idUser = preferences.getString('id_user');
       var token = preferences.getString('token');
-      var _riwayatTiket = Uri.parse(
-          'https://plavon.dlhcode.com/api/get_pemesanan_by_id/${id_user.toString()}');
-      http.Response response = await http.get(_riwayatTiket, headers: {
+      var riwayatTiket = Uri.parse(
+          'https://plavon.dlhcode.com/api/get_pemesanan_by_id/${idUser.toString()}');
+      http.Response response = await http.get(riwayatTiket, headers: {
         "Accept": "application/json",
-        "Authorization": "Bearer " + token.toString(),
+        "Authorization": "Bearer $token",
       });
       // print(id_user);
       if (response.statusCode == 200) {
@@ -48,9 +49,10 @@ class _transaksiPageState extends State<transaksiPage> {
           String username = 'SB-Mid-server-z5T9WhivZDuXrJxC7w-civ_k';
           String password = '';
           String basicAuth =
-              'Basic ' + base64Encode(utf8.encode('$username:$password'));
+              'Basic ${base64Encode(utf8.encode('$username:$password'))}';
           http.Response responseTransaksi = await http.get(
             Uri.parse(
+                // ignore: prefer_interpolation_to_compose_strings
                 "https://api.sandbox.midtrans.com/v2/" + orderId + "/status"),
             headers: <String, String>{
               'authorization': basicAuth,
@@ -66,7 +68,7 @@ class _transaksiPageState extends State<transaksiPage> {
             http.Response getOrderId =
                 await http.post(updateTransaksi, headers: {
               "Accept": "application/json",
-              "Authorization": "Bearer " + token.toString(),
+              "Authorization": "Bearer $token",
             }, body: {
               "order_id": orderId,
             });
@@ -75,6 +77,7 @@ class _transaksiPageState extends State<transaksiPage> {
         }
       }
     } catch (e) {
+      // ignore: avoid_print
       print(e);
     }
   }
@@ -85,6 +88,7 @@ class _transaksiPageState extends State<transaksiPage> {
     });
   }
 
+  @override
   void initState() {
     super.initState();
     riwayatTiket();
@@ -94,10 +98,8 @@ class _transaksiPageState extends State<transaksiPage> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        
         body: RefreshIndicator(
           onRefresh: refresh,
           child: ListView.builder(
@@ -107,27 +109,23 @@ class _transaksiPageState extends State<transaksiPage> {
               elevation: 8,
               child: ListTile(
                 leading: CircleAvatar(
-                  backgroundColor: Color.fromARGB(255, 48, 31, 83),
+                  backgroundColor: const Color.fromARGB(255, 48, 31, 83),
                   child: Image.network(
                                     'https://plavon.dlhcode.com/storage/images/barang/${_get[index]['image']}',
                                     fit: BoxFit.fill,
                                   ),
                 ),
                 title: Text(
-                  "Barang " +
-                      _get[index]['nama_barang'].toString(),
-                  style: new TextStyle(
+                  "Barang ${_get[index]['nama_barang']}",
+                  style: const TextStyle(
                       fontSize: 15.0, fontWeight: FontWeight.bold),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
                 subtitle: Text(
-                  _get[index]['status'].toString() +
-                      " | "
-                          "Tgl " +
-                      _get[index]['created_at'].toString(),
+                  "${_get[index]['status']} | Tgl ${_get[index]['created_at']}",
                   maxLines: 2,
-                  style: new TextStyle(fontSize: 14.0),
+                  style: const TextStyle(fontSize: 14.0),
                   overflow: TextOverflow.ellipsis,
                 ),
                 trailing: Text(_get[index]['harga'].toString()),
@@ -168,7 +166,6 @@ class _transaksiPageState extends State<transaksiPage> {
             ),
           ),
         ),
- 
       ),
     );
   }

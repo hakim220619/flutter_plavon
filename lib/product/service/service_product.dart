@@ -4,15 +4,15 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:plavon/cart/cartPage.dart';
 import 'package:plavon/home/view/home.dart';
 // ignore: unused_import
 import 'package:plavon/pay/view/pay.dart';
-import 'package:plavon/transaksi/view/transaksi.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:plavon/product/service/data.dart';
 
 class ServiceProduct {
-  static var _pesanmidtransUrl =
+  static final _pesanmidtransUrl =
       Uri.parse('https://app.sandbox.midtrans.com/snap/v1/transactions');
 
   Future<List<Data>> fetchData() async {
@@ -21,7 +21,7 @@ class ServiceProduct {
     var url = Uri.parse('https://plavon.dlhcode.com/api/barang');
     final response = await http.get(url, headers: {
       "Accept": "application/json",
-      "Authorization": "Bearer " + token.toString(),
+      "Authorization": "Bearer $token",
     });
     // print(response.body);
     if (response.statusCode == 200) {
@@ -32,12 +32,12 @@ class ServiceProduct {
     }
   }
 
-  static var _pesanUrl =
+  static final _pesanUrl =
       Uri.parse("https://plavon.dlhcode.com/api/tambah_pemesanan");
 
   static pesan(id, jumlah, harga, context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    var id_user = prefs.getString('id_user');
+    var idUser = prefs.getString('id_user');
     var token = prefs.getString('token');
     // print(id);
     // print(jumlah);
@@ -49,7 +49,7 @@ class ServiceProduct {
     String username = 'SB-Mid-server-z5T9WhivZDuXrJxC7w-civ_k';
     String password = '';
     String basicAuth =
-        'Basic ' + base64Encode(utf8.encode('$username:$password'));
+        'Basic ${base64Encode(utf8.encode('$username:$password'))}';
 
     http.Response responseMidtrans = await http.post(_pesanmidtransUrl,
         headers: <String, String>{
@@ -65,9 +65,9 @@ class ServiceProduct {
 
     http.Response response = await http.post(_pesanUrl, headers: {
       "Accept": "application/json",
-      "Authorization": "Bearer " + token.toString(),
+      "Authorization": "Bearer $token",
     }, body: {
-      "id_user": id_user.toString(),
+      "id_user": idUser.toString(),
       "id_barang": id.toString(),
       "jumlah": jumlah.toString(),
       "harga": harga.toString(),
@@ -85,7 +85,70 @@ class ServiceProduct {
             builder: (
           context,
         ) =>
-                HomePage()),
+                const HomePage()),
+        (route) => false,
+      );
+    }
+  }
+
+  static final _pesanUrlCart =
+      Uri.parse("https://plavon.dlhcode.com/api/cart");
+  // static final _pesanUrlCart =
+  //     Uri.parse("http://127.0.0.1:8000/api/cart");
+
+  static cart(id, jumlah, context) async {
+    
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var idUser = prefs.getString('id_user');
+    var token = prefs.getString('token');
+    http.Response response = await http.post(_pesanUrlCart, headers: {
+      "Accept": "application/json",
+      "Authorization": "Bearer $token",
+    }, body: {
+      "id_user": idUser.toString(),
+      "id_barang": id.toString(),
+      "jumlah": jumlah.toString(),
+    });
+    if (response.statusCode == 200) {
+      // ignore: unused_local_variable
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+            builder: (
+          context,
+        ) =>
+                const HomePage()),
+        (route) => false,
+      );
+    }
+  }
+  static final _pesanUrlSend =
+      Uri.parse("https://plavon.dlhcode.com/api/SendPesan");
+  // static final _pesanUrlSend =
+  //     Uri.parse("http://127.0.0.1:8000/api/sendPesan");
+
+  // ignore: non_constant_identifier_names
+  static SendPesan(id_user, context) async {
+    
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var idUser = prefs.getString('id_user');
+    var token = prefs.getString('token');
+    http.Response response = await http.post(_pesanUrlSend, headers: {
+      "Accept": "application/json",
+      "Authorization": "Bearer $token",
+    }, body: {
+      "id_user": idUser.toString(),
+    });
+    print(response.body);
+    if (response.statusCode == 200) {
+      // ignore: unused_local_variable
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+            builder: (
+          context,
+        ) =>
+                const HomePage()),
         (route) => false,
       );
     }

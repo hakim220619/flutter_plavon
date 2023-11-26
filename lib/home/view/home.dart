@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:plavon/home/menu_page.dart';
+import 'package:plavon/cart/cartPage.dart';
 import 'package:plavon/login/view/login.dart';
 import 'package:plavon/product/view/listProduct.dart';
 import 'package:http/http.dart' as http;
@@ -12,6 +11,7 @@ class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _HomePageState createState() => _HomePageState();
 }
 
@@ -20,13 +20,14 @@ class _HomePageState extends State<HomePage> {
 
   final _logoutUrl = Uri.parse('https://plavon.dlhcode.com/api/logout');
 
+  // ignore: non_constant_identifier_names
   Future Logout() async {
     try {
       SharedPreferences preferences = await SharedPreferences.getInstance();
       var token = preferences.getString('token');
       http.Response response = await _client.get(_logoutUrl, headers: {
         "Accept": "application/json",
-        "Authorization": "Bearer " + token.toString(),
+        "Authorization": "Bearer $token",
       });
       if (response.statusCode == 200) {
         SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -37,6 +38,7 @@ class _HomePageState extends State<HomePage> {
           preferences.remove("token");
         });
 
+        // ignore: use_build_context_synchronously
         Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
@@ -47,6 +49,7 @@ class _HomePageState extends State<HomePage> {
         // Navigator.of(context).pop();
       }
     } catch (e) {
+      // ignore: avoid_print
       print(e);
     }
   }
@@ -93,18 +96,20 @@ void _onItemTapped(int index) {
   }
   @override
   Widget build(BuildContext context) {
-    final List<Widget> _widgetOptions = <Widget>[
+    final List<Widget> widgetOptions = <Widget>[
       const ListProduct(),
+      const CartPage(),
       const transaksiPage(),
       const ProfilePage()
     ];
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Plavon"),
+        title: const Text("Plavon", style: TextStyle(color: Colors.white),),
+        backgroundColor: Colors.blue,
         actions: [
           IconButton(
-            icon: const Icon(Icons.power_settings_new),
+            icon: const Icon(Icons.power_settings_new, color: Colors.white,),
             onPressed: () {
               _showMyDialog('Log Out', 'Are you sure you want to logout?', 'No',
                   'Yes', () async {}, false);
@@ -121,7 +126,7 @@ void _onItemTapped(int index) {
         centerTitle: true,
       ),
       body: Center(
-          child: _widgetOptions.elementAt(
+          child: widgetOptions.elementAt(
             _selectedIndex,
           ),
         ),
@@ -130,18 +135,26 @@ void _onItemTapped(int index) {
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
               label: 'Home',
+              backgroundColor: Colors.blue
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.shop_2),
+              label: 'Cart',
+              backgroundColor: Colors.blue
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.business),
               label: 'Riwayat',
+              backgroundColor: Colors.blue
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.school),
               label: 'Profile',
+              backgroundColor: Colors.blue
             ),
           ],
           currentIndex: _selectedIndex,
-          selectedItemColor: Colors.amber[800],
+          selectedItemColor: Color.fromARGB(255, 0, 0, 0),
           onTap: _onItemTapped,
         ),
 

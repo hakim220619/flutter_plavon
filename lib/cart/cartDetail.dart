@@ -1,41 +1,35 @@
 import 'package:flutter/material.dart';
-import 'package:plavon/product/service/service_product.dart';
+import 'package:plavon/cart/cartPage.dart';
+import 'package:plavon/home/view/home.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:async';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
-class DetailProduct extends StatefulWidget {
+class CartDetail extends StatefulWidget {
   final String id;
   // ignore: non_constant_identifier_names
-  final String user_id;
-  // ignore: non_constant_identifier_names
   final String nama_barang;
-  final String jenis;
-  final String stok;
+  final String jumlah;
   final String harga;
-  final String ukuran;
   final String image;
-  final String deskripsi;
-  const DetailProduct(
-      {Key? key,
-      required this.id,
-      // ignore: non_constant_identifier_names
-      required this.user_id,
-      // ignore: non_constant_identifier_names
-      required this.nama_barang,
-      required this.jenis,
-      required this.stok,
-      required this.harga,
-      required this.ukuran,
-      required this.image,
-      required this.deskripsi
-      })
-      : super(key: key);
+  const CartDetail({
+    Key? key,
+    required this.id,
+    // ignore: non_constant_identifier_names
+    required this.nama_barang,
+    required this.jumlah,
+    required this.harga,
+    required this.image,
+  }) : super(key: key);
 
   @override
-  State<DetailProduct> createState() => _DetailProductState();
+  State<CartDetail> createState() => _CartDetailState();
 }
 
 late String jumlah;
 
-class _DetailProductState extends State<DetailProduct> {
+class _CartDetailState extends State<CartDetail> {
   // ignore: non_constant_identifier_names
   TextEditingController NamaBarang = TextEditingController();
   final _formkey = GlobalKey<FormState>();
@@ -49,7 +43,36 @@ class _DetailProductState extends State<DetailProduct> {
 
   @override
   Widget build(BuildContext context) {
-    Future<void> showMyDialog(String title, String text, String nobutton,
+    final client = http.Client();
+    // ignore: non_constant_identifier_names
+    Future Delete() async {
+      try {
+        SharedPreferences preferences = await SharedPreferences.getInstance();
+        var token = preferences.getString('token');
+        http.Response response = await client.get(
+            Uri.parse(
+                'https://plavon.dlhcode.com/api/delete_cart/${widget.id.toString()}'),
+            headers: {
+              "Accept": "application/json",
+              "Authorization": "Bearer $token",
+            });
+        // print(response.body);
+        // ignore: use_build_context_synchronously
+        // Navigator.popUntil(context, (route) => route.isFirst);
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+            builder: (BuildContext context) => const CartPage(),
+          ),
+          (route) => false,
+        );
+        // Navigator.of(context).pop();
+      } catch (e) {
+        print(e);
+      }
+    }
+
+    Future<void> showMyDialogDelete(String title, String text, String nobutton,
         String yesbutton, Function onTap, bool isValue) async {
       return showDialog<void>(
         context: context,
@@ -72,8 +95,8 @@ class _DetailProductState extends State<DetailProduct> {
               TextButton(
                 child: Text(yesbutton),
                 onPressed: () async {
-                  await ServiceProduct.cart(widget.id.toString(),
-                      jumlah.toString(), context);
+                  Delete();
+                  Navigator.of(context, rootNavigator: true).pop('dialog');
                 },
               ),
             ],
@@ -107,8 +130,9 @@ class _DetailProductState extends State<DetailProduct> {
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(0),
                             child: Image.network(
-                              widget.image == '' ? 'https://plavon.dlhcode.com/storage/images/barang/plavon1.jpeg' :
-                              'https://plavon.dlhcode.com/storage/images/barang/${widget.image.toString()}',
+                              widget.image == ''
+                                  ? 'https://plavon.dlhcode.com/storage/images/barang/plavon1.jpeg'
+                                  : 'https://plavon.dlhcode.com/storage/images/barang/${widget.image.toString()}',
                               fit: BoxFit.fill,
                             ),
                           ),
@@ -120,8 +144,8 @@ class _DetailProductState extends State<DetailProduct> {
                           initialValue: widget.nama_barang.toString(),
                           onChanged: (value) {
                             setState(() {
-                             // ignore: unused_local_variable, non_constant_identifier_names
-                             String nama_barang = value;
+                              // ignore: unused_local_variable, non_constant_identifier_names
+                              String nama_barang = value;
                             });
                           },
                           readOnly: true,
@@ -144,38 +168,11 @@ class _DetailProductState extends State<DetailProduct> {
                           height: 10.0,
                         ),
                         TextFormField(
-                          initialValue: widget.jenis.toString(),
-                          onChanged: (value) {
-                            setState(() {
-                             // ignore: unused_local_variable
-                             String jenis = value;
-                            });
-                          },
-                          readOnly: true,
-                          keyboardType: TextInputType.number,
-                          decoration: InputDecoration(
-                              fillColor: Colors.grey.shade100,
-                              filled: true,
-                              hintText: "Masukan Keterangan",
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10)),
-                              labelText: "Keterangan"),
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return "Keterangan Pembelian tidak boleh kosong";
-                            }
-                            return null;
-                          },
-                        ),
-                        const SizedBox(
-                          height: 10.0,
-                        ),
-                        TextFormField(
                           initialValue: widget.harga.toString(),
                           onChanged: (value) {
                             setState(() {
-                             // ignore: unused_local_variable
-                             String harga = value;
+                              // ignore: unused_local_variable
+                              String harga = value;
                             });
                           },
                           readOnly: true,
@@ -198,23 +195,25 @@ class _DetailProductState extends State<DetailProduct> {
                           height: 10.0,
                         ),
                         TextFormField(
-                          controller: NamaBarang,
+                          initialValue: widget.jumlah.toString(),
                           onChanged: (value) {
                             setState(() {
-                              jumlah = value;
+                              // ignore: unused_local_variable
+                              String jumlah = value;
                             });
                           },
+                          readOnly: true,
                           keyboardType: TextInputType.number,
                           decoration: InputDecoration(
                               fillColor: Colors.grey.shade100,
                               filled: true,
-                              hintText: "Masukan Jumlah Pembelian",
+                              hintText: "Jumlah",
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10)),
                               labelText: "Jumlah"),
                           validator: (value) {
                             if (value!.isEmpty) {
-                              return "Jumlah Pembelian tidak boleh kosong";
+                              return "Jumlah";
                             }
                             return null;
                           },
@@ -222,40 +221,32 @@ class _DetailProductState extends State<DetailProduct> {
                         const SizedBox(
                           height: 10.0,
                         ),
+                        Container(
+                          height: 100,
+                          width: double.infinity,
+                          color: Colors.redAccent[50],
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Center(
+                                  child: ElevatedButton(
+                                child: const Text("Delete"),
+                                onPressed: () async {
+                                  showMyDialogDelete(
+                                      'Delete',
+                                      'Are you sure you want to Delet?',
+                                      'No',
+                                      'Yes',
+                                      () async {},
+                                      false);
+                                },
+                              )),
+                            ],
+                          ),
+                        ),
                       ],
                     ),
                   ),
-
-                  InkWell(
-                      onTap: () async {
-                        if (_formkey.currentState!.validate()) {
-                          showMyDialog(
-                              'Detail Pesanan',
-                              'Pesanan anda sudah benar?',
-                              'No',
-                              'Yes',
-                              () async {},
-                              false);
-                        }
-                      },
-                      child: Container(
-                        margin: const EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 10),
-                        height: 50,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                            color: Colors.blueAccent,
-                            borderRadius: BorderRadius.circular(25)),
-                        child: const Center(
-                          child: Text(
-                            "Cart",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20,
-                                color: Colors.white),
-                          ),
-                        ),
-                      ))
                 ],
               ),
             ),

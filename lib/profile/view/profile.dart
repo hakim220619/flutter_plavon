@@ -10,9 +10,10 @@ class ProfilePage extends StatefulWidget {
   @override
   State<ProfilePage> createState() => _ProfilePageState();
 }
- List _get = [];
+ // ignore: non_constant_identifier_names
  String full_name = '';
  String email = '';
+ // ignore: non_constant_identifier_names
  String created_at = '';
 class _ProfilePageState extends State<ProfilePage> {
  
@@ -23,12 +24,11 @@ class _ProfilePageState extends State<ProfilePage> {
       var url = Uri.parse('https://plavon.dlhcode.com/api/me');
       final response = await http.get(url, headers: {
         "Accept": "application/json",
-        "Authorization": "Bearer " + token.toString(),
+        "Authorization": "Bearer $token",
       });
       // print(response.body);
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
-        print(data);
         setState(() {
            full_name = data['full_name'];
            email = data['email'];
@@ -37,10 +37,12 @@ class _ProfilePageState extends State<ProfilePage> {
         });
       }
     } catch (e) {
+      // ignore: avoid_print
       print(e);
     }
   }
 
+  @override
   void initState() {
     super.initState();
     profile();
