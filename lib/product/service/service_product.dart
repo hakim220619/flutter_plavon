@@ -139,7 +139,8 @@ class ServiceProduct {
     }, body: {
       "id_user": idUser.toString(),
     });
-    print(response.body);
+    
+    // print(response.body);
     if (response.statusCode == 200) {
       // ignore: unused_local_variable
       Navigator.pushAndRemoveUntil(
