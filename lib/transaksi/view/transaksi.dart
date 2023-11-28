@@ -1,4 +1,7 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
+import 'package:grouped_list/grouped_list.dart';
 // ignore: unused_import
 import 'package:plavon/home/view/home.dart';
 import 'package:plavon/pay/view/pay.dart';
@@ -102,35 +105,37 @@ class _transaksiPageState extends State<transaksiPage> {
       home: Scaffold(
         body: RefreshIndicator(
           onRefresh: refresh,
-          child: ListView.builder(
-            itemCount: _get.length,
-            itemBuilder: (context, index) => Card(
+          child: GroupedListView<dynamic, String>(
+            elements: _get,
+            groupBy: (element) => element['order_id'],
+            groupSeparatorBuilder: (String groupByValue) => const Divider(height:15),
+            itemBuilder: (context, dynamic element) => Card(
               margin: const EdgeInsets.all(10),
               elevation: 8,
               child: ListTile(
                 leading: CircleAvatar(
                   backgroundColor: const Color.fromARGB(255, 48, 31, 83),
                   child: Image.network(
-                                    'https://plavon.dlhcode.com/storage/images/barang/${_get[index]['image']}',
-                                    fit: BoxFit.fill,
-                                  ),
+                    'https://plavon.dlhcode.com/storage/images/barang/${element['image']}',
+                    fit: BoxFit.fill,
+                  ),
                 ),
                 title: Text(
-                  "Barang ${_get[index]['nama_barang']}",
+                  "Barang ${element['nama_barang']}",
                   style: const TextStyle(
                       fontSize: 15.0, fontWeight: FontWeight.bold),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
                 subtitle: Text(
-                  "${_get[index]['status']} | Tgl ${_get[index]['created_at']}",
+                  "${element['status_barang']} | Tgl ${element['created_at']}",
                   maxLines: 2,
                   style: const TextStyle(fontSize: 14.0),
                   overflow: TextOverflow.ellipsis,
                 ),
-                trailing: Text(_get[index]['harga'].toString()),
+                trailing: Text(element['harga'].toString()),
                 onTap: () {
-                  if (_get[index]['status'] == 'lunas') {
+                  if (element['status'] == 'lunas') {
                     showDialog<String>(
                       context: context,
                       builder: (BuildContext context) => AlertDialog(
@@ -150,13 +155,13 @@ class _transaksiPageState extends State<transaksiPage> {
                       context,
                       MaterialPageRoute(
                         builder: (context) => PayPage(
-                          id: _get[index]['id'],
-                          nama_barang: _get[index]['nama_barang'].toString(),
-                          harga: _get[index]['harga'].toString(),
-                          status: _get[index]['status'].toString(),
-                          jenis: _get[index]['jenis'].toString(),
-                          jumlah: _get[index]['jumlah'].toString(),
-                          redirect_url: _get[index]['redirect_url'].toString(),
+                          id: element['id'],
+                          nama_barang: element['nama_barang'].toString(),
+                          harga: element['harga'].toString(),
+                          status: element['status'].toString(),
+                          jenis: element['jenis'].toString(),
+                          jumlah: element['jumlah'].toString(),
+                          redirect_url: element['redirect_url'].toString(),
                         ),
                       ),
                     );
@@ -164,6 +169,11 @@ class _transaksiPageState extends State<transaksiPage> {
                 },
               ),
             ),
+            itemComparator: (item1, item2) => item1['nama_barang']
+                .compareTo(item2['nama_barang']), // optional
+            useStickyGroupSeparators: true, // optional
+            floatingHeader: true, // optional
+            order: GroupedListOrder.ASC, // optional
           ),
         ),
       ),

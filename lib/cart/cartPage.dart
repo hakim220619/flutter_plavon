@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:plavon/cart/cartDetail.dart';
 import 'package:plavon/home/menu_page.dart';
@@ -23,9 +25,9 @@ List _get = [];
 
 // ignore: camel_case_types
 class _CartPageState extends State<CartPage> {
-  final _formkey = GlobalKey<FormState>();
   // ignore: non_constant_identifier_names
   String id_user = '';
+  String total = '';
   Future riwayatTiket() async {
     try {
       SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -98,7 +100,7 @@ class _CartPageState extends State<CartPage> {
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text(text),
+                Text("$text Dengan Total : $total"),
               ],
             ),
           ),
@@ -119,9 +121,36 @@ class _CartPageState extends State<CartPage> {
     );
   }
 
+  Future cartTotal() async {
+    try {
+      SharedPreferences preferences = await SharedPreferences.getInstance();
+      var token = preferences.getString('token');
+      var riwayatTiket =
+          Uri.parse('https://plavon.dlhcode.com/api/getTotalCart');
+      http.Response response = await http.get(riwayatTiket, headers: {
+        "Accept": "application/json",
+        "Authorization": "Bearer $token",
+      });
+      // print(response.body);
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+
+        setState(() {
+          total = data['data'];
+          // print(total);
+        });
+        // print(_get[0]['order_id']);
+      }
+    } catch (e) {
+      // ignore: avoid_print
+      print(e);
+    }
+  }
+
   Future refresh() async {
     setState(() {
       riwayatTiket();
+      cartTotal();
     });
   }
 
@@ -129,6 +158,7 @@ class _CartPageState extends State<CartPage> {
   void initState() {
     super.initState();
     riwayatTiket();
+    cartTotal();
     refresh();
   }
 
@@ -140,78 +170,93 @@ class _CartPageState extends State<CartPage> {
         body: Column(
           children: [
             SizedBox(
-              height: 550,
+              height: 450,
               child: Center(
                 child: RefreshIndicator(
                   onRefresh: refresh,
                   child: ListView.builder(
                     itemCount: _get.length,
-                    itemBuilder: (context, index) => Card(
-                      margin: const EdgeInsets.all(10),
-                      elevation: 8,
-                      child: ListTile(
-                        leading: CircleAvatar(
-                          backgroundColor:
-                              const Color.fromARGB(255, 48, 31, 83),
-                          child: Image.network(
-                            _get[index]['image'] == ''
-                                ? 'https://plavon.dlhcode.com/storage/images/barang/plavon1.jpeg'
-                                : 'https://plavon.dlhcode.com/storage/images/barang/${_get[index]['image']}',
-                            fit: BoxFit.fill,
-                          ),
-                        ),
-                        title: Text(
-                          "Barang ${_get[index]['nama_barang']}",
-                          style: const TextStyle(
-                              fontSize: 15.0, fontWeight: FontWeight.bold),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        subtitle: Text(
-                          "Tgl ${_get[index]['created_at']}",
-                          maxLines: 2,
-                          style: const TextStyle(fontSize: 14.0),
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        trailing: Text(_get[index]['harga'].toString()),
-                        onTap: () {
-                          if (_get[index]['status'] == 'lunas') {
-                            showDialog<String>(
-                              context: context,
-                              builder: (BuildContext context) => AlertDialog(
-                                title: const Text('Status Pembayaran'),
-                                content: const Text(
-                                    'Selamat pembayaran anda telah lunas'),
-                                actions: <Widget>[
-                                  TextButton(
-                                    onPressed: () =>
-                                        Navigator.pop(context, 'OK'),
-                                    child: const Text('OK'),
+                    itemBuilder: (context, index) => Column(
+                      children: [
+                        Card(
+                          margin: const EdgeInsets.all(10),
+                          elevation: 8,
+                          child: ListTile(
+                            leading: CircleAvatar(
+                              backgroundColor:
+                                  const Color.fromARGB(255, 48, 31, 83),
+                              child: Image.network(
+                                _get[index]['image'] == ''
+                                    ? 'https://plavon.dlhcode.com/storage/images/barang/plavon1.jpeg'
+                                    : 'https://plavon.dlhcode.com/storage/images/barang/${_get[index]['image']}',
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                            title: Text(
+                              "Barang ${_get[index]['nama_barang']}",
+                              style: const TextStyle(
+                                  fontSize: 15.0, fontWeight: FontWeight.bold),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            subtitle: Text(
+                              "Tgl ${_get[index]['created_at']}",
+                              maxLines: 2,
+                              style: const TextStyle(fontSize: 14.0),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            trailing: Text(_get[index]['total'].toString()),
+                            onTap: () {
+                              if (_get[index]['status'] == 'lunas') {
+                                showDialog<String>(
+                                  context: context,
+                                  builder: (BuildContext context) => AlertDialog(
+                                    title: const Text('Status Pembayaran'),
+                                    content: const Text(
+                                        'Selamat pembayaran anda telah lunas'),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        onPressed: () =>
+                                            Navigator.pop(context, 'OK'),
+                                        child: const Text('OK'),
+                                      ),
+                                    ],
                                   ),
-                                ],
-                              ),
-                            );
-                          } else {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => CartDetail(
-                                  id: _get[index]['id'],
-                                  nama_barang:
-                                      _get[index]['nama_barang'].toString(),
-                                  harga: _get[index]['harga'].toString(),
-                                  jumlah: _get[index]['jumlah'].toString(),
-                                  image: _get[index]['image'],
-                                ),
-                              ),
-                            );
-                          }
-                        },
-                      ),
+                                );
+                              } else {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => CartDetail(
+                                      id: _get[index]['id'],
+                                      nama_barang:
+                                          _get[index]['nama_barang'].toString(),
+                                      harga: _get[index]['harga'].toString(),
+                                      jumlah: _get[index]['jumlah'].toString(),
+                                      image: _get[index]['image'],
+                                    ),
+                                  ),
+                                );
+                              }
+                            },
+                            
+                          ),
+                          
+                        ),
+                        
+                      ],
                     ),
                   ),
                 ),
               ),
+            ),
+            const Row(
+              children: [
+                Text(''),
+                SizedBox(
+                  width: 200,
+                ),
+              ],
             ),
             InkWell(
                 onTap: () async {

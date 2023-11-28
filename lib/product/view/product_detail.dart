@@ -25,8 +25,7 @@ class DetailProduct extends StatefulWidget {
       required this.harga,
       required this.ukuran,
       required this.image,
-      required this.deskripsi
-      })
+      required this.deskripsi})
       : super(key: key);
 
   @override
@@ -72,8 +71,8 @@ class _DetailProductState extends State<DetailProduct> {
               TextButton(
                 child: Text(yesbutton),
                 onPressed: () async {
-                  await ServiceProduct.cart(widget.id.toString(),
-                      jumlah.toString(), context);
+                  await ServiceProduct.cart(
+                      widget.id.toString(), jumlah.toString(), context);
                 },
               ),
             ],
@@ -98,17 +97,46 @@ class _DetailProductState extends State<DetailProduct> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Center(
+                    child: Container(
+                      width: 56,
+                      height: 56,
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.blue,
+                      ),
+                      child: const Icon(
+                        Icons.message,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                  const Center(
+                    child: Column(
+                      children: [
+                        Text(
+                          'Detail Product',
+                          style: TextStyle(
+                              fontSize: 30,
+                              fontFamily: AutofillHints.creditCardType),
+                        ),
+                        // Text('Berikut Merupakan Detail Product')
+                      ],
+                    ),
+                  ),
+                  
                   Padding(
                     padding: const EdgeInsets.symmetric(
-                        vertical: 16.0, horizontal: 32.0),
+                        vertical: 10.0, horizontal: 22.0),
                     child: Column(
                       children: [
                         Center(
                           child: ClipRRect(
-                            borderRadius: BorderRadius.circular(0),
+                            borderRadius: BorderRadius.circular(10),
                             child: Image.network(
-                              widget.image == '' ? 'https://plavon.dlhcode.com/storage/images/barang/plavon1.jpeg' :
-                              'https://plavon.dlhcode.com/storage/images/barang/${widget.image.toString()}',
+                              widget.image == ''
+                                  ? 'https://plavon.dlhcode.com/storage/images/barang/plavon1.jpeg'
+                                  : 'https://plavon.dlhcode.com/storage/images/barang/${widget.image.toString()}',
                               fit: BoxFit.fill,
                             ),
                           ),
@@ -120,8 +148,8 @@ class _DetailProductState extends State<DetailProduct> {
                           initialValue: widget.nama_barang.toString(),
                           onChanged: (value) {
                             setState(() {
-                             // ignore: unused_local_variable, non_constant_identifier_names
-                             String nama_barang = value;
+                              // ignore: unused_local_variable, non_constant_identifier_names
+                              String nama_barang = value;
                             });
                           },
                           readOnly: true,
@@ -147,8 +175,8 @@ class _DetailProductState extends State<DetailProduct> {
                           initialValue: widget.jenis.toString(),
                           onChanged: (value) {
                             setState(() {
-                             // ignore: unused_local_variable
-                             String jenis = value;
+                              // ignore: unused_local_variable
+                              String jenis = value;
                             });
                           },
                           readOnly: true,
@@ -174,8 +202,8 @@ class _DetailProductState extends State<DetailProduct> {
                           initialValue: widget.harga.toString(),
                           onChanged: (value) {
                             setState(() {
-                             // ignore: unused_local_variable
-                             String harga = value;
+                              // ignore: unused_local_variable
+                              String harga = value;
                             });
                           },
                           readOnly: true,
@@ -225,7 +253,6 @@ class _DetailProductState extends State<DetailProduct> {
                       ],
                     ),
                   ),
-
                   InkWell(
                       onTap: () async {
                         if (_formkey.currentState!.validate()) {
