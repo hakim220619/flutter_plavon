@@ -207,43 +207,22 @@ class _CartPageState extends State<CartPage> {
                             ),
                             trailing: Text(_get[index]['total'].toString()),
                             onTap: () {
-                              if (_get[index]['status'] == 'lunas') {
-                                showDialog<String>(
-                                  context: context,
-                                  builder: (BuildContext context) => AlertDialog(
-                                    title: const Text('Status Pembayaran'),
-                                    content: const Text(
-                                        'Selamat pembayaran anda telah lunas'),
-                                    actions: <Widget>[
-                                      TextButton(
-                                        onPressed: () =>
-                                            Navigator.pop(context, 'OK'),
-                                        child: const Text('OK'),
-                                      ),
-                                    ],
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => CartDetail(
+                                    id: _get[index]['id'],
+                                    nama_barang:
+                                        _get[index]['nama_barang'].toString(),
+                                    harga: _get[index]['harga'].toString(),
+                                    jumlah: _get[index]['jumlah'].toString(),
+                                    image: _get[index]['image'],
                                   ),
-                                );
-                              } else {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => CartDetail(
-                                      id: _get[index]['id'],
-                                      nama_barang:
-                                          _get[index]['nama_barang'].toString(),
-                                      harga: _get[index]['harga'].toString(),
-                                      jumlah: _get[index]['jumlah'].toString(),
-                                      image: _get[index]['image'],
-                                    ),
-                                  ),
-                                );
-                              }
+                                ),
+                              );
                             },
-                            
                           ),
-                          
                         ),
-                        
                       ],
                     ),
                   ),

@@ -4,7 +4,6 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:plavon/cart/cartPage.dart';
 import 'package:plavon/home/view/home.dart';
 // ignore: unused_import
 import 'package:plavon/pay/view/pay.dart';

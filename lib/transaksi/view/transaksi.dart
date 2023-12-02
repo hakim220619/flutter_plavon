@@ -41,7 +41,7 @@ class _transaksiPageState extends State<transaksiPage> {
 
         setState(() {
           _get = data['data'];
-          // print(_get);
+          print(_get);
         });
         // print(_get[0]['order_id']);
 
@@ -128,7 +128,7 @@ class _transaksiPageState extends State<transaksiPage> {
                   overflow: TextOverflow.ellipsis,
                 ),
                 subtitle: Text(
-                  "${element['status_barang']} | Tgl ${element['created_at']}",
+                  "${element['status'] == '' ? element['status_barang'] : element['status']} | Tgl ${element['created_at']}",
                   maxLines: 2,
                   style: const TextStyle(fontSize: 14.0),
                   overflow: TextOverflow.ellipsis,
@@ -158,7 +158,7 @@ class _transaksiPageState extends State<transaksiPage> {
                           id: element['id'],
                           nama_barang: element['nama_barang'].toString(),
                           harga: element['harga'].toString(),
-                          status: element['status'].toString(),
+                          status: element['status_barang'].toString(),
                           jenis: element['jenis'].toString(),
                           jumlah: element['jumlah'].toString(),
                           redirect_url: element['redirect_url'].toString(),

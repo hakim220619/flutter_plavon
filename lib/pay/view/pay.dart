@@ -174,6 +174,25 @@ class _PayPageState extends State<PayPage> {
                   ),
                 ),
               ),
+              GestureDetector(
+                child: Card(
+                  color: Colors.white,
+              margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
+                  child: ListTile(
+                leading: const Icon(
+                      Icons.numbers,
+                      color: Color.fromARGB(255, 0, 0, 0),
+                    ),
+                    title: Text(
+                      widget.jumlah,
+                  style: const TextStyle(
+                          color: Color.fromARGB(255, 0, 0, 0),
+                          fontSize: 20,
+                          fontFamily: "Source Sans Pro"),
+                    ),
+                  ),
+                ),
+              ),
               Container(
                 height: 100,
                 width: double.infinity,
