@@ -65,7 +65,7 @@ var formatter = NumberFormat('###,000');
   }
   @override
   Widget build(BuildContext context) {
-    Future<void> _showMyDialog(String title, String text, String nobutton,
+    Future<void> showMyDialog(String title, String text, String nobutton,
       String yesbutton, Function onTap, bool isValue) async {
     return showDialog<void>(
       context: context,
@@ -212,6 +212,7 @@ var formatter = NumberFormat('###,000');
                   child: const Text("Bayar Sekarang"),
                       onPressed: () async {
                         String url = widget.redirect_url;
+                        // ignore: deprecated_member_use
                         var urllaunchable = await canLaunch(
                             url); //canLaunch is from url_launcher package
                         if (urllaunchable) {
@@ -227,7 +228,7 @@ var formatter = NumberFormat('###,000');
                           
                   child: const Text("Delete"),
                       onPressed: () async {
-                    _showMyDialog('Delete', 'Are you sure you want to Delet?',
+                    showMyDialog('Delete', 'Are you sure you want to Delet?',
                         'No',
                   'Yes', () async {}, false);
                       },
