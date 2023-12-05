@@ -1,4 +1,3 @@
-import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:grouped_list/grouped_list.dart';
@@ -11,6 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
+// ignore: depend_on_referenced_packages
 import 'package:intl/intl.dart';
 
 // ignore: camel_case_types
