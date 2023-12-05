@@ -27,6 +27,7 @@ class PayPage extends StatefulWidget {
   final String status;
   final String jenis;
   final String jumlah;
+  // ignore: non_constant_identifier_names
   final String redirect_url;
 
   @override
@@ -37,16 +38,18 @@ class PayPage extends StatefulWidget {
 class _PayPageState extends State<PayPage> {
     final _client = http.Client();
 var formatter = NumberFormat('###,000');
+  // ignore: non_constant_identifier_names
   Future Delete() async {
     try {
       SharedPreferences preferences = await SharedPreferences.getInstance();
       var token = preferences.getString('token');
       http.Response response = await _client.post(Uri.parse('https://plavon.dlhcode.com/api/delete_pemesanan/${widget.id.toString()}'), headers: {
         "Accept": "application/json",
-        "Authorization": "Bearer " + token.toString(),
+        "Authorization": "Bearer $token",
       });
       if (response.statusCode == 200) {
 
+        // ignore: use_build_context_synchronously
         Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
