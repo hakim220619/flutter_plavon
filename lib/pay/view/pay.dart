@@ -216,6 +216,7 @@ var formatter = NumberFormat('###,000');
                         var urllaunchable = await canLaunch(
                             url); //canLaunch is from url_launcher package
                         if (urllaunchable) {
+                          // ignore: deprecated_member_use
                           await launch(
                               url); //launch is from url_launcher package to launch URL
                         } else {
