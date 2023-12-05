@@ -8,6 +8,7 @@ import 'package:plavon/product/view/product_detail.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:async';
 import 'dart:convert';
+import 'package:intl/intl.dart';
 
 import 'package:http/http.dart' as http;
 
@@ -20,6 +21,7 @@ class ListProduct extends StatefulWidget {
 
 class _ListProductState extends State<ListProduct> {
   List _get = [];
+  var formatter = NumberFormat('###,000');
   Future barang() async {
     try {
       SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -94,7 +96,7 @@ class _ListProductState extends State<ListProduct> {
                               children: [
                                 Expanded(
                                   child: Image.network(
-                                    _get[i]['image'] == '' ? 'https://plavon.dlhcode.com/storage/images/barang/plavon1.jpeg' :
+                                    _get[i]['image'] == '' ? 'https://plavon.dlhcode.com/storage/images/barang/brg.jpeg' :
                                     'https://plavon.dlhcode.com/storage/images/barang/${_get[i]['image']}',
                                     fit: BoxFit.fill,
                                   ),
@@ -109,7 +111,7 @@ class _ListProductState extends State<ListProduct> {
                                 Row(
                                   children: [
                                     Text(
-                                      '${_get[i]['harga']}',
+                                      formatter.format(int.parse(_get[i]['harga'])),
                                       style: const TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 15,

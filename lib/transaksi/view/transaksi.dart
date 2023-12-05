@@ -11,6 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
+import 'package:intl/intl.dart';
 
 // ignore: camel_case_types
 class transaksiPage extends StatefulWidget {
@@ -21,6 +22,7 @@ class transaksiPage extends StatefulWidget {
 }
 
 List _get = [];
+var formatter = NumberFormat('###,000');
 
 // ignore: camel_case_types
 class _transaksiPageState extends State<transaksiPage> {
@@ -41,7 +43,7 @@ class _transaksiPageState extends State<transaksiPage> {
 
         setState(() {
           _get = data['data'];
-          print(_get);
+          // print(_get);
         });
         // print(_get[0]['order_id']);
 
@@ -108,7 +110,8 @@ class _transaksiPageState extends State<transaksiPage> {
           child: GroupedListView<dynamic, String>(
             elements: _get,
             groupBy: (element) => element['order_id'],
-            groupSeparatorBuilder: (String groupByValue) => const Divider(height:15),
+            groupSeparatorBuilder: (String groupByValue) =>
+                const Divider(height: 15),
             itemBuilder: (context, dynamic element) => Card(
               margin: const EdgeInsets.all(10),
               elevation: 8,
@@ -133,7 +136,8 @@ class _transaksiPageState extends State<transaksiPage> {
                   style: const TextStyle(fontSize: 14.0),
                   overflow: TextOverflow.ellipsis,
                 ),
-                trailing: Text(element['harga'].toString()),
+                trailing: Text(
+                    formatter.format(int.parse(element['harga'].toString()))),
                 onTap: () {
                   if (element['status'] == 'lunas') {
                     showDialog<String>(

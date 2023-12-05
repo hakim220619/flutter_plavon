@@ -12,6 +12,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
+import 'package:intl/intl.dart';
 
 // ignore: camel_case_types
 class CartPage extends StatefulWidget {
@@ -28,6 +29,7 @@ class _CartPageState extends State<CartPage> {
   // ignore: non_constant_identifier_names
   String id_user = '';
   String total = '';
+   var formatter = NumberFormat('###,000');
   Future riwayatTiket() async {
     try {
       SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -46,6 +48,7 @@ class _CartPageState extends State<CartPage> {
         setState(() {
           _get = data['data'];
           id_user = data['data'][0]['id_user'];
+          // print(_get);
         });
         // print(_get[0]['order_id']);
 
@@ -100,7 +103,7 @@ class _CartPageState extends State<CartPage> {
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text("$text Dengan Total : $total"),
+                Text("$text Dengan Total : ${formatter.format(int.parse(total))}"),
               ],
             ),
           ),
@@ -186,8 +189,9 @@ class _CartPageState extends State<CartPage> {
                               backgroundColor:
                                   const Color.fromARGB(255, 48, 31, 83),
                               child: Image.network(
+                                
                                 _get[index]['image'] == ''
-                                    ? 'https://plavon.dlhcode.com/storage/images/barang/plavon1.jpeg'
+                                    ? 'https://plavon.dlhcode.com/storage/images/barang/brg.jpeg'
                                     : 'https://plavon.dlhcode.com/storage/images/barang/${_get[index]['image']}',
                                 fit: BoxFit.fill,
                               ),
@@ -205,7 +209,7 @@ class _CartPageState extends State<CartPage> {
                               style: const TextStyle(fontSize: 14.0),
                               overflow: TextOverflow.ellipsis,
                             ),
-                            trailing: Text(_get[index]['total'].toString()),
+                            trailing: Text(formatter.format(int.parse(_get[index]['total'].toString()))),
                             onTap: () {
                               Navigator.push(
                                 context,

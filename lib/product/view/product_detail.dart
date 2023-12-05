@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:plavon/product/service/service_product.dart';
-
+import 'package:intl/intl.dart';
 class DetailProduct extends StatefulWidget {
   final String id;
   // ignore: non_constant_identifier_names
@@ -40,14 +40,16 @@ class _DetailProductState extends State<DetailProduct> {
   final _formkey = GlobalKey<FormState>();
   // TextEditingController Email = TextEditingController();
   // TextEditingController Nohp = TextEditingController();
+
   @override
   void dispose() {
     _formkey.currentState?.dispose();
     super.dispose();
   }
-
+ var formatter = NumberFormat('###,000');
   @override
   Widget build(BuildContext context) {
+     
     Future<void> showMyDialog(String title, String text, String nobutton,
         String yesbutton, Function onTap, bool isValue) async {
       return showDialog<void>(
@@ -172,7 +174,7 @@ class _DetailProductState extends State<DetailProduct> {
                           height: 10.0,
                         ),
                         TextFormField(
-                          initialValue: widget.jenis.toString(),
+                          initialValue: widget.deskripsi.toString(),
                           onChanged: (value) {
                             setState(() {
                               // ignore: unused_local_variable
@@ -199,7 +201,7 @@ class _DetailProductState extends State<DetailProduct> {
                           height: 10.0,
                         ),
                         TextFormField(
-                          initialValue: widget.harga.toString(),
+                          initialValue: formatter.format(int.parse(widget.harga.toString())),
                           onChanged: (value) {
                             setState(() {
                               // ignore: unused_local_variable

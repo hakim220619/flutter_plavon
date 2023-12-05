@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 
 class CartDetail extends StatefulWidget {
   final String id;
@@ -44,6 +45,7 @@ class _CartDetailState extends State<CartDetail> {
   @override
   Widget build(BuildContext context) {
     final client = http.Client();
+       var formatter = NumberFormat('###,000');
     // ignore: non_constant_identifier_names
     Future Delete() async {
       try {
@@ -167,7 +169,7 @@ class _CartDetailState extends State<CartDetail> {
                           height: 10.0,
                         ),
                         TextFormField(
-                          initialValue: widget.harga.toString(),
+                          initialValue: formatter.format(int.parse(widget.harga.toString())),
                           onChanged: (value) {
                             setState(() {
                               // ignore: unused_local_variable

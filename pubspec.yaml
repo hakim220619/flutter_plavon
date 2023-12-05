@@ -48,6 +48,8 @@ dependencies:
   url_launcher: ^6.1.11
   profile: ^0.0.1
   grouped_list: ^5.1.2
+  flutter_localizations:
+    sdk: flutter
 
 dev_dependencies:
   flutter_test:

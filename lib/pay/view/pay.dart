@@ -5,6 +5,7 @@ import 'package:plavon/transaksi/view/transaksi.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 
 class PayPage extends StatefulWidget {
   const PayPage({
@@ -32,7 +33,7 @@ class PayPage extends StatefulWidget {
 
 class _PayPageState extends State<PayPage> {
     final _client = http.Client();
-
+var formatter = NumberFormat('###,000');
   Future Delete() async {
     try {
       SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -41,7 +42,7 @@ class _PayPageState extends State<PayPage> {
         "Accept": "application/json",
         "Authorization": "Bearer " + token.toString(),
       });
-      // print(response.statusCode);
+      print(response.body);
       if (response.statusCode == 200) {
 
         Navigator.pushAndRemoveUntil(
@@ -104,7 +105,7 @@ class _PayPageState extends State<PayPage> {
               margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
                   child: ListTile(
                 leading: const Icon(
-                      Icons.person,
+                      Icons.description_outlined,
                       color: Color.fromARGB(255, 0, 0, 0),
                     ),
                     title: Text(
@@ -123,11 +124,11 @@ class _PayPageState extends State<PayPage> {
               margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
                   child: ListTile(
                 leading: const Icon(
-                      Icons.email,
+                      Icons.numbers_rounded,
                       color: Color.fromARGB(255, 0, 0, 0),
                     ),
                     title: Text(
-                      widget.harga,
+                      formatter.format(int.parse(widget.harga)),
                   style: const TextStyle(
                           color: Color.fromARGB(255, 0, 0, 0),
                           fontSize: 20,
@@ -142,7 +143,7 @@ class _PayPageState extends State<PayPage> {
               margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
                   child: ListTile(
                 leading: const Icon(
-                      Icons.call,
+                      Icons.description,
                       color: Color.fromARGB(255, 0, 0, 0),
                     ),
                     title: Text(
@@ -180,7 +181,7 @@ class _PayPageState extends State<PayPage> {
               margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
                   child: ListTile(
                 leading: const Icon(
-                      Icons.numbers,
+                      Icons.countertops,
                       color: Color.fromARGB(255, 0, 0, 0),
                     ),
                     title: Text(
