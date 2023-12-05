@@ -220,7 +220,6 @@ var formatter = NumberFormat('###,000');
                           await launch(
                               url); //launch is from url_launcher package to launch URL
                         } else {
-                          print("URL can't be launched.");
                         }
                       },
                     )),
