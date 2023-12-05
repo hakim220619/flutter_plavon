@@ -11,14 +11,17 @@ class PayPage extends StatefulWidget {
   const PayPage({
     Key? key,
     required this.id,
+    // ignore: non_constant_identifier_names
     required this.nama_barang,
     required this.harga,
     required this.status,
     required this.jenis,
     required this.jumlah,
+    // ignore: non_constant_identifier_names
     required this.redirect_url,
   }) : super(key: key);
   final String id;
+  // ignore: non_constant_identifier_names
   final String nama_barang;
   final String harga;
   final String status;
