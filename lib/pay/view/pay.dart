@@ -42,7 +42,6 @@ var formatter = NumberFormat('###,000');
         "Accept": "application/json",
         "Authorization": "Bearer " + token.toString(),
       });
-      print(response.body);
       if (response.statusCode == 200) {
 
         Navigator.pushAndRemoveUntil(
