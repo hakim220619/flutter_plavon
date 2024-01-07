@@ -7,7 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class HttpService {
   static final _client = http.Client();
 
-  static final _loginUrl = Uri.parse('https://plavon.dlhcode.com/api/login');
+  static final _loginUrl = Uri.parse('https://plavon.eastbluetechnology.com/api/login');
   static login(email, password, context) async {
     // bool isLoading = false;
     http.Response response = await _client

@@ -21,7 +21,7 @@ class _ProfilePageState extends State<ProfilePage> {
     try {
       SharedPreferences preferences = await SharedPreferences.getInstance();
       var token = preferences.getString('token');
-      var url = Uri.parse('https://plavon.dlhcode.com/api/me');
+      var url = Uri.parse('https://plavon.eastbluetechnology.com/api/me');
       final response = await http.get(url, headers: {
         "Accept": "application/json",
         "Authorization": "Bearer $token",

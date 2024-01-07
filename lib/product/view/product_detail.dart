@@ -137,8 +137,8 @@ class _DetailProductState extends State<DetailProduct> {
                             borderRadius: BorderRadius.circular(10),
                             child: Image.network(
                               widget.image == ''
-                                  ? 'https://plavon.dlhcode.com/storage/images/barang/plavon1.jpeg'
-                                  : 'https://plavon.dlhcode.com/storage/images/barang/${widget.image.toString()}',
+                                  ? 'https://plavon.eastbluetechnology.com/storage/images/barang/plavon1.jpeg'
+                                  : 'https://plavon.eastbluetechnology.com/storage/images/barang/${widget.image.toString()}',
                               fit: BoxFit.fill,
                             ),
                           ),

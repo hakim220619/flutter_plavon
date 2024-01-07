@@ -18,7 +18,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final _client = http.Client();
 
-  final _logoutUrl = Uri.parse('https://plavon.dlhcode.com/api/logout');
+  final _logoutUrl = Uri.parse('https://plavon.eastbluetechnology.com/api/logout');
 
   // ignore: non_constant_identifier_names
   Future Logout() async {

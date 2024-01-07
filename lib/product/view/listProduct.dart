@@ -26,7 +26,7 @@ class _ListProductState extends State<ListProduct> {
     try {
       SharedPreferences preferences = await SharedPreferences.getInstance();
       var token = preferences.getString('token');
-      var url = Uri.parse('https://plavon.dlhcode.com/api/barang');
+      var url = Uri.parse('https://plavon.eastbluetechnology.com/api/barang');
       final response = await http.get(url, headers: {
         "Accept": "application/json",
         "Authorization": "Bearer $token",
@@ -96,8 +96,8 @@ class _ListProductState extends State<ListProduct> {
                               children: [
                                 Expanded(
                                   child: Image.network(
-                                    _get[i]['image'] == '' ? 'https://plavon.dlhcode.com/storage/images/barang/brg.jpeg' :
-                                    'https://plavon.dlhcode.com/storage/images/barang/${_get[i]['image']}',
+                                    _get[i]['image'] == '' ? 'https://plavon.eastbluetechnology.com/storage/images/barang/brg.jpeg' :
+                                    'https://plavon.eastbluetechnology.com/storage/images/barang/${_get[i]['image']}',
                                     fit: BoxFit.fill,
                                   ),
                                 ),

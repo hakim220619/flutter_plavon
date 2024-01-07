@@ -32,7 +32,7 @@ class _transaksiPageState extends State<transaksiPage> {
       var idUser = preferences.getString('id_user');
       var token = preferences.getString('token');
       var riwayatTiket = Uri.parse(
-          'https://plavon.dlhcode.com/api/get_pemesanan_by_id/${idUser.toString()}');
+          'https://plavon.eastbluetechnology.com/api/get_pemesanan_by_id/${idUser.toString()}');
       http.Response response = await http.get(riwayatTiket, headers: {
         "Accept": "application/json",
         "Authorization": "Bearer $token",
@@ -68,7 +68,7 @@ class _transaksiPageState extends State<transaksiPage> {
           // print(jsonTransaksi);
           if (jsonTransaksi['status_code'] == '200') {
             var updateTransaksi =
-                Uri.parse('https://plavon.dlhcode.com/api/updateTransaksi');
+                Uri.parse('https://plavon.eastbluetechnology.com/api/updateTransaksi');
             // ignore: unused_local_variable
             http.Response getOrderId =
                 await http.post(updateTransaksi, headers: {
@@ -119,7 +119,7 @@ class _transaksiPageState extends State<transaksiPage> {
                 leading: CircleAvatar(
                   backgroundColor: const Color.fromARGB(255, 48, 31, 83),
                   child: Image.network(
-                    'https://plavon.dlhcode.com/storage/images/barang/${element['image']}',
+                    'https://plavon.eastbluetechnology.com/storage/images/barang/${element['image']}',
                     fit: BoxFit.fill,
                   ),
                 ),

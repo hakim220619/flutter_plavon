@@ -43,7 +43,7 @@ var formatter = NumberFormat('###,000');
     try {
       SharedPreferences preferences = await SharedPreferences.getInstance();
       var token = preferences.getString('token');
-      http.Response response = await _client.post(Uri.parse('https://plavon.dlhcode.com/api/delete_pemesanan/${widget.id.toString()}'), headers: {
+      http.Response response = await _client.post(Uri.parse('https://plavon.eastbluetechnology.com/api/delete_pemesanan/${widget.id.toString()}'), headers: {
         "Accept": "application/json",
         "Authorization": "Bearer $token",
       });

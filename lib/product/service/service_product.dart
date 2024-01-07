@@ -17,7 +17,7 @@ class ServiceProduct {
   Future<List<Data>> fetchData() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     var token = preferences.getString('token');
-    var url = Uri.parse('https://plavon.dlhcode.com/api/barang');
+    var url = Uri.parse('https://plavon.eastbluetechnology.com/api/barang');
     final response = await http.get(url, headers: {
       "Accept": "application/json",
       "Authorization": "Bearer $token",
@@ -32,7 +32,7 @@ class ServiceProduct {
   }
 
   static final _pesanUrl =
-      Uri.parse("https://plavon.dlhcode.com/api/tambah_pemesanan");
+      Uri.parse("https://plavon.eastbluetechnology.com/api/tambah_pemesanan");
 
   static pesan(id, jumlah, harga, context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -91,7 +91,7 @@ class ServiceProduct {
   }
 
   static final _pesanUrlCart =
-      Uri.parse("https://plavon.dlhcode.com/api/cart");
+      Uri.parse("https://plavon.eastbluetechnology.com/api/cart");
   // static final _pesanUrlCart =
   //     Uri.parse("http://127.0.0.1:8000/api/cart");
 
@@ -122,7 +122,7 @@ class ServiceProduct {
     }
   }
   static final _pesanUrlSend =
-      Uri.parse("https://plavon.dlhcode.com/api/SendPesan");
+      Uri.parse("https://plavon.eastbluetechnology.com/api/SendPesan");
   // static final _pesanUrlSend =
   //     Uri.parse("http://127.0.0.1:8000/api/sendPesan");
 

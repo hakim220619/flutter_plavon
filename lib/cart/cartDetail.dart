@@ -53,7 +53,7 @@ class _CartDetailState extends State<CartDetail> {
         var token = preferences.getString('token');
         http.Response response = await client.get(
             Uri.parse(
-                'https://plavon.dlhcode.com/api/delete_cart/${widget.id.toString()}'),
+                'https://plavon.eastbluetechnology.com/api/delete_cart/${widget.id.toString()}'),
             headers: {
               "Accept": "application/json",
               "Authorization": "Bearer $token",
@@ -132,8 +132,8 @@ class _CartDetailState extends State<CartDetail> {
                             borderRadius: BorderRadius.circular(0),
                             child: Image.network(
                               widget.image == ''
-                                  ? 'https://plavon.dlhcode.com/storage/images/barang/plavon1.jpeg'
-                                  : 'https://plavon.dlhcode.com/storage/images/barang/${widget.image.toString()}',
+                                  ? 'https://plavon.eastbluetechnology.com/storage/images/barang/plavon1.jpeg'
+                                  : 'https://plavon.eastbluetechnology.com/storage/images/barang/${widget.image.toString()}',
                               fit: BoxFit.fill,
                             ),
                           ),
