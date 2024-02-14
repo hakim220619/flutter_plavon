@@ -34,7 +34,7 @@ class _ListProductState extends State<ListProduct> {
       // print(response.body);
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
-        // print(data);
+        print(data);
         setState(() {
           _get = data['data'];
           // print(_get);
@@ -110,15 +110,22 @@ class _ListProductState extends State<ListProduct> {
                                 ),
                                 Row(
                                   children: [
-                                    Text(
-                                      formatter.format(int.parse(_get[i]['harga'])),
+                                    Text('Rp. ${formatter.format(int.parse(_get[i]['harga']))}',
                                       style: const TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 15,
                                       ),
                                     ),
+                                    
                                   ],
-                                )
+                                  
+                                ),
+                                Text('Ukuran: ${_get[i]['ukuran']}',
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 15,
+                                      ),
+                                    ),
                               ],
                             ),
                           ),

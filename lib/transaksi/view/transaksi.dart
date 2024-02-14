@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:grouped_list/grouped_list.dart';
 // ignore: unused_import
@@ -67,8 +66,8 @@ class _transaksiPageState extends State<transaksiPage> {
           var jsonTransaksi = jsonDecode(responseTransaksi.body.toString());
           // print(jsonTransaksi);
           if (jsonTransaksi['status_code'] == '200') {
-            var updateTransaksi =
-                Uri.parse('https://plavon.eastbluetechnology.com/api/updateTransaksi');
+            var updateTransaksi = Uri.parse(
+                'https://plavon.eastbluetechnology.com/api/updateTransaksi');
             // ignore: unused_local_variable
             http.Response getOrderId =
                 await http.post(updateTransaksi, headers: {
@@ -103,84 +102,203 @@ class _transaksiPageState extends State<transaksiPage> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        body: RefreshIndicator(
-          onRefresh: refresh,
-          child: GroupedListView<dynamic, String>(
-            elements: _get,
-            groupBy: (element) => element['order_id'],
-            groupSeparatorBuilder: (String groupByValue) =>
-                const Divider(height: 15),
-            itemBuilder: (context, dynamic element) => Card(
-              margin: const EdgeInsets.all(10),
-              elevation: 8,
-              child: ListTile(
-                leading: CircleAvatar(
-                  backgroundColor: const Color.fromARGB(255, 48, 31, 83),
-                  child: Image.network(
-                    'https://plavon.eastbluetechnology.com/storage/images/barang/${element['image']}',
-                    fit: BoxFit.fill,
+        debugShowCheckedModeBanner: false,
+        home: Scaffold(
+            body: ListView(
+    shrinkWrap: true,
+                children: [
+                  const Center(child: Text('pending')),
+                  SizedBox(
+                    height: 400,
+                    width: 800.0,
+                    child: RefreshIndicator(
+                      onRefresh: refresh,
+                      child: GroupedListView<dynamic, String>(
+                        elements: _get,
+                        groupBy: (element) => element['order_id'],
+                        groupSeparatorBuilder: (String groupByValue) =>
+                            const SizedBox(height: 2,),
+                        itemBuilder: (context, dynamic element) => element[
+                                    'status'] !=
+                                'lunas'
+                            ? Card(
+                                margin: const EdgeInsets.all(10),
+                                elevation: 8,
+                                child: ListTile(
+                                  leading: CircleAvatar(
+                                    backgroundColor:
+                                        const Color.fromARGB(255, 48, 31, 83),
+                                    child: Image.network(
+                                      'https://plavon.eastbluetechnology.com/storage/images/barang/${element['image']}',
+                                      fit: BoxFit.fill,
+                                    ),
+                                  ),
+                                  title: Text(
+                                    "Barang ${element['nama_barang']}",
+                                    style: const TextStyle(
+                                        fontSize: 15.0,
+                                        fontWeight: FontWeight.bold),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                  subtitle: Text(
+                                    "${element['status'] == '' ? element['status_barang'] : element['status']} | Tgl ${element['created_at']}",
+                                    maxLines: 2,
+                                    style: const TextStyle(fontSize: 14.0),
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                  trailing: Text(formatter.format(
+                                      int.parse(element['harga'].toString()))),
+                                  onTap: () {
+                                    if (element['status'] == 'lunas') {
+                                      showDialog<String>(
+                                        context: context,
+                                        builder: (BuildContext context) =>
+                                            AlertDialog(
+                                          title:
+                                              const Text('Status Pembayaran'),
+                                          content: const Text(
+                                              'Selamat pembayaran anda telah lunas'),
+                                          actions: <Widget>[
+                                            TextButton(
+                                              onPressed: () =>
+                                                  Navigator.pop(context, 'OK'),
+                                              child: const Text('OK'),
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    } else {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => PayPage(
+                                            id: element['id'],
+                                            nama_barang: element['nama_barang']
+                                                .toString(),
+                                            harga: element['harga'].toString(),
+                                            status: element['status_barang']
+                                                .toString(),
+                                            jenis: element['jenis'].toString(),
+                                            jumlah:
+                                                element['jumlah'].toString(),
+                                            redirect_url:
+                                                element['redirect_url']
+                                                    .toString(),
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                  },
+                                ),
+                              )
+                            : const Text(''),
+                        itemComparator: (item1, item2) => item1['nama_barang']
+                            .compareTo(item2['nama_barang']), // optional
+                        useStickyGroupSeparators: true, // optional
+                        floatingHeader: true, // optional
+                        order: GroupedListOrder.ASC, // optional
+                      ),
+                    ),
+                    // const SizedBox(height: 20,)
                   ),
-                ),
-                title: Text(
-                  "Barang ${element['nama_barang']}",
-                  style: const TextStyle(
-                      fontSize: 15.0, fontWeight: FontWeight.bold),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                subtitle: Text(
-                  "${element['status'] == '' ? element['status_barang'] : element['status']} | Tgl ${element['created_at']}",
-                  maxLines: 2,
-                  style: const TextStyle(fontSize: 14.0),
-                  overflow: TextOverflow.ellipsis,
-                ),
-                trailing: Text(
-                    formatter.format(int.parse(element['harga'].toString()))),
-                onTap: () {
-                  if (element['status'] == 'lunas') {
-                    showDialog<String>(
-                      context: context,
-                      builder: (BuildContext context) => AlertDialog(
-                        title: const Text('Status Pembayaran'),
-                        content:
-                            const Text('Selamat pembayaran anda telah lunas'),
-                        actions: <Widget>[
-                          TextButton(
-                            onPressed: () => Navigator.pop(context, 'OK'),
-                            child: const Text('OK'),
-                          ),
-                        ],
+                  const Center(child: Text('Lunas')),
+                  SizedBox(
+                    height: 500,
+                    width: 800.0,
+                    child: RefreshIndicator(
+                      onRefresh: refresh,
+                      child: GroupedListView<dynamic, String>(
+                        elements: _get,
+                        groupBy: (element) => element['order_id'],
+                        groupSeparatorBuilder: (String groupByValue) =>
+                            const Text(''),
+                        itemBuilder: (context, dynamic element) => element[
+                                    'status'] ==
+                                'lunas'
+                            ? Card(
+                                margin: const EdgeInsets.all(10),
+                                elevation: 8,
+                                child: ListTile(
+                                  leading: CircleAvatar(
+                                    backgroundColor:
+                                        const Color.fromARGB(255, 48, 31, 83),
+                                    child: Image.network(
+                                      'https://plavon.eastbluetechnology.com/storage/images/barang/${element['image']}',
+                                      fit: BoxFit.fill,
+                                    ),
+                                  ),
+                                  title: Text(
+                                    "Barang ${element['nama_barang']}",
+                                    style: const TextStyle(
+                                        fontSize: 15.0,
+                                        fontWeight: FontWeight.bold),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                  subtitle: Text(
+                                    "${element['status'] == '' ? element['status_barang'] : element['status']} | Tgl ${element['created_at']}",
+                                    maxLines: 2,
+                                    style: const TextStyle(fontSize: 14.0),
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                  trailing: Text(formatter.format(
+                                      int.parse(element['harga'].toString()))),
+                                  onTap: () {
+                                    if (element['status'] == 'lunas') {
+                                      showDialog<String>(
+                                        context: context,
+                                        builder: (BuildContext context) =>
+                                            AlertDialog(
+                                          title:
+                                              const Text('Status Pembayaran'),
+                                          content: const Text(
+                                              'Selamat pembayaran anda telah lunas'),
+                                          actions: <Widget>[
+                                            TextButton(
+                                              onPressed: () =>
+                                                  Navigator.pop(context, 'OK'),
+                                              child: const Text('OK'),
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    } else {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => PayPage(
+                                            id: element['id'],
+                                            nama_barang: element['nama_barang']
+                                                .toString(),
+                                            harga: element['harga'].toString(),
+                                            status: element['status_barang']
+                                                .toString(),
+                                            jenis: element['jenis'].toString(),
+                                            jumlah:
+                                                element['jumlah'].toString(),
+                                            redirect_url:
+                                                element['redirect_url']
+                                                    .toString(),
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                  },
+                                ),
+                              )
+                            : const Text(''),
+                        itemComparator: (item1, item2) => item1['nama_barang']
+                            .compareTo(item2['nama_barang']), // optional
+                        useStickyGroupSeparators: true, // optional
+                        floatingHeader: true, // optional
+                        order: GroupedListOrder.ASC, // optional
                       ),
-                    );
-                  } else {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => PayPage(
-                          id: element['id'],
-                          nama_barang: element['nama_barang'].toString(),
-                          harga: element['harga'].toString(),
-                          status: element['status_barang'].toString(),
-                          jenis: element['jenis'].toString(),
-                          jumlah: element['jumlah'].toString(),
-                          redirect_url: element['redirect_url'].toString(),
-                        ),
-                      ),
-                    );
-                  }
-                },
-              ),
-            ),
-            itemComparator: (item1, item2) => item1['nama_barang']
-                .compareTo(item2['nama_barang']), // optional
-            useStickyGroupSeparators: true, // optional
-            floatingHeader: true, // optional
-            order: GroupedListOrder.ASC, // optional
-          ),
-        ),
-      ),
-    );
+                    ),
+                    // const SizedBox(height: 20,)
+                  ),
+                ],
+              )),
+        );
   }
 }
