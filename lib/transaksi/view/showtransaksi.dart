@@ -213,6 +213,7 @@ class _ShowTransaksiState extends State<ShowTransaksi> {
                                 MaterialPageRoute(
                                   builder: (context) => transaksiPage(
                                     order_id: _get[index]['order_id'],
+                                    redirect_url: _get[index]['redirect_url'],
                                     
                                   ),
                                 ),
@@ -263,16 +264,7 @@ class _ShowTransaksiState extends State<ShowTransaksi> {
                             ),
                             trailing: Text(
                                 '      Total: \n Rp. ${formatter.format(int.parse(_getLunas[index]['total'].toString()))}'),
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => transaksiPage(
-                                    order_id: _get[index]['order_id'],
-                                  ),
-                                ),
-                              );
-                            },
+                            
                           ),
                         ),
                       ],

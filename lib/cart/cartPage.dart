@@ -104,7 +104,7 @@ class _CartPageState extends State<CartPage> {
             child: ListBody(
               children: <Widget>[
                 Text(
-                    "$text Dengan Total : ${formatter.format(int.parse(total))}"),
+                    " Dengan Total : ${formatter.format(int.parse(total))}"),
               ],
             ),
           ),
@@ -209,8 +209,7 @@ class _CartPageState extends State<CartPage> {
                               style: const TextStyle(fontSize: 14.0),
                               overflow: TextOverflow.ellipsis,
                             ),
-                            trailing: Text('${formatter.format(
-                                int.parse(_get[index]['total'].toString()))}'),
+                            trailing: Text(formatter.format(int.parse(_get[index]['total']))),
                             onTap: () {
                               Navigator.push(
                                 context,
@@ -247,8 +246,7 @@ class _CartPageState extends State<CartPage> {
                   width: 300,
                   height: 50,
                   child: Center(
-                      child: Text(
-                          'Total Rp.${formatter.format(int.parse(total))}')),
+                      child: Text("Total Rp. ${total != '' ? formatter.format(int.parse(total)) : ''}")),
                 ),
               ),
             ),
