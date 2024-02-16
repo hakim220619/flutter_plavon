@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 // ignore: unused_import
 import 'package:plavon/home/view/home.dart';
+import 'package:plavon/transaksi/view/showtransaksi.dart';
 import 'package:plavon/transaksi/view/transaksi.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -53,7 +54,7 @@ var formatter = NumberFormat('###,000');
         Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
-            builder: (BuildContext context) => const transaksiPage(),
+            builder: (BuildContext context) => const ShowTransaksi(),
           ),
           (route) => false,
         );

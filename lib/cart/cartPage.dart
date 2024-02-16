@@ -29,7 +29,7 @@ class _CartPageState extends State<CartPage> {
   // ignore: non_constant_identifier_names
   String id_user = '';
   String total = '';
-   var formatter = NumberFormat('###,000');
+  var formatter = NumberFormat('###,000');
   Future riwayatTiket() async {
     try {
       SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -72,8 +72,8 @@ class _CartPageState extends State<CartPage> {
           var jsonTransaksi = jsonDecode(responseTransaksi.body.toString());
           // print(jsonTransaksi);
           if (jsonTransaksi['status_code'] == '200') {
-            var updateTransaksi =
-                Uri.parse('https://plavon.eastbluetechnology.com/api/updateTransaksi');
+            var updateTransaksi = Uri.parse(
+                'https://plavon.eastbluetechnology.com/api/updateTransaksi');
             // ignore: unused_local_variable
             http.Response getOrderId =
                 await http.post(updateTransaksi, headers: {
@@ -103,7 +103,8 @@ class _CartPageState extends State<CartPage> {
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text("$text Dengan Total : ${formatter.format(int.parse(total))}"),
+                Text(
+                    "$text Dengan Total : ${formatter.format(int.parse(total))}"),
               ],
             ),
           ),
@@ -189,7 +190,6 @@ class _CartPageState extends State<CartPage> {
                               backgroundColor:
                                   const Color.fromARGB(255, 48, 31, 83),
                               child: Image.network(
-                                
                                 _get[index]['image'] == ''
                                     ? 'https://plavon.eastbluetechnology.com/storage/images/barang/brg.jpeg'
                                     : 'https://plavon.eastbluetechnology.com/storage/images/barang/${_get[index]['image']}',
@@ -209,7 +209,8 @@ class _CartPageState extends State<CartPage> {
                               style: const TextStyle(fontSize: 14.0),
                               overflow: TextOverflow.ellipsis,
                             ),
-                            trailing: Text(formatter.format(int.parse(_get[index]['total'].toString()))),
+                            trailing: Text('${formatter.format(
+                                int.parse(_get[index]['total'].toString()))}'),
                             onTap: () {
                               Navigator.push(
                                 context,
@@ -233,13 +234,26 @@ class _CartPageState extends State<CartPage> {
                 ),
               ),
             ),
-            const Row(
-              children: [
-                Text(''),
-                SizedBox(
-                  width: 200,
+            Center(
+              child: Card(
+                elevation: 0,
+                shape: RoundedRectangleBorder(
+                  side: BorderSide(
+                    color: Theme.of(context).colorScheme.outline,
+                  ),
+                  borderRadius: const BorderRadius.all(Radius.circular(12)),
                 ),
-              ],
+                child: SizedBox(
+                  width: 300,
+                  height: 50,
+                  child: Center(
+                      child: Text(
+                          'Total Rp.${formatter.format(int.parse(total))}')),
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 10,
             ),
             InkWell(
                 onTap: () async {

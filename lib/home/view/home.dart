@@ -4,6 +4,7 @@ import 'package:plavon/login/view/login.dart';
 import 'package:plavon/product/view/listProduct.dart';
 import 'package:http/http.dart' as http;
 import 'package:plavon/profile/view/profile.dart';
+import 'package:plavon/transaksi/view/showtransaksi.dart';
 import 'package:plavon/transaksi/view/transaksi.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -99,7 +100,7 @@ void _onItemTapped(int index) {
     final List<Widget> widgetOptions = <Widget>[
       const ListProduct(),
       const CartPage(),
-      const transaksiPage(),
+      const ShowTransaksi(),
       const ProfilePage()
     ];
 

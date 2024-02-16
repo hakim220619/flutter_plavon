@@ -5,6 +5,7 @@ import 'package:plavon/home/view/home.dart';
 import 'package:plavon/login/view/login.dart';
 // ignore: unused_import
 import 'package:plavon/product/view/listProduct.dart';
+import 'package:plavon/transaksi/view/showtransaksi.dart';
 import 'package:plavon/transaksi/view/transaksi.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -80,7 +81,7 @@ class _MenuPageState extends State<MenuPage> {
                         builder: (
                       context,
                     ) =>
-                            transaksiPage()));
+                            ShowTransaksi()));
               },
             ),
             Divider(),
