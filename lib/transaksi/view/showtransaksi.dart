@@ -250,7 +250,7 @@ class _ShowTransaksiState extends State<ShowTransaksi> {
                                     Color.fromARGB(255, 200, 194, 212),
                                 child: Text("\$")),
                             title: Text(
-                              "Id Transaksi ${_getLunas[index]['order_id']}",
+                              "Id Transaksi BRG${_getLunas[index]['order_id']}",
                               style: const TextStyle(
                                   fontSize: 15.0, fontWeight: FontWeight.bold),
                               maxLines: 1,
